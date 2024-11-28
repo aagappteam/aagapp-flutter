@@ -1,0 +1,2280 @@
+{
+	"info": {
+		"_postman_id": "3939fc6a-8cc2-4341-89f5-1e5ab9ac3185",
+		"name": "AAG APIS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14505823",
+		"_collection_link": "https://grey-equinox-861078.postman.co/workspace/My-Workspace~207c899b-1e71-4ac3-8a20-bca51589e515/collection/14505823-3939fc6a-8cc2-4341-89f5-1e5ab9ac3185?action=share&source=collection_link&creator=14505823"
+	},
+	"item": [
+		{
+			"name": "Customer Apis",
+			"item": [
+				{
+					"name": "Customer Update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"mannat\",\r\n    \"lastName\": \"abrol\",\r\n    \"category\": \"GEN\",\r\n    \"emailAddress\": \"mannat90gmail.com\"\r\n   }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/api/v1/customer/update?customerId=102",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"v1",
+								"customer",
+								"update"
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "102"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Username",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"username\":\"ram123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/v1/customer/update-username?customerId=102",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customer",
+								"update-username"
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "102"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add address",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"addressName\":\"Flat\",\r\n  \"address\": \"#1112 Sector 21\",\r\n  \"state\": \"Chandigarh\",\r\n  \"district\": \"Chandigarh\",\r\n  \"city\": \"Chandigarh\",\r\n  \"pinCode\": \"160064\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/v1/customer/add-address?customerId=233",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customer",
+								"add-address"
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "233"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Customer",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://3bb8-203-190-154-106.ngrok-free.app/api/v1/customer/delete/6702",
+							"protocol": "https",
+							"host": [
+								"3bb8-203-190-154-106",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customer",
+								"delete",
+								"6702"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"password\":\"raman123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/v1/customer/create-or-update-password?customerId=102306",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customer",
+								"create-or-update-password"
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "102306"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Address List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/v1/customer/get-customer?customerId=233",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customer",
+								"get-customer"
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "233"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Adress Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://3bb8-203-190-154-106.ngrok-free.app/api/v1/customer/address-details?customerId=21442&addressId=1",
+							"protocol": "https",
+							"host": [
+								"3bb8-203-190-154-106",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customer",
+								"address-details"
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "21442"
+								},
+								{
+									"key": "addressId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Customer by   id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://3bb8-203-190-154-106.ngrok-free.app/api/v1/customer/address-details?customerId=21442&addressId=1",
+							"protocol": "https",
+							"host": [
+								"3bb8-203-190-154-106",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customer",
+								"address-details"
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "21442"
+								},
+								{
+									"key": "addressId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Saved Forms",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/api/v1/customer/forms/show-saved-forms?customer_id=12706",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"v1",
+								"customer",
+								"forms",
+								"show-saved-forms"
+							],
+							"query": [
+								{
+									"key": "customer_id",
+									"value": "12706"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Filled Forms",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/api/v1/customer/forms/show-filled-forms?customer_id=12706",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"v1",
+								"customer",
+								"forms",
+								"show-filled-forms"
+							],
+							"query": [
+								{
+									"key": "customer_id",
+									"value": "12706"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Recommended Forms",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5NTZiMzE5OS1jMWQzLTQ3MDEtYTg2Mi0zMDlhMDZhZTYxNGYiLCJpZCI6Mywicm9sZSI6NCwiaXBBZGRyZXNzIjoiMDowOjA6MDowOjA6MDoxIiwiaWF0IjoxNzI1NjA1NzU1LCJleHAiOjE3MjU2NDE3NTV9.32W78dl7TOPQHqAz52vFblJJGn5YdxB6tY2rgDqXdSk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/api/v1/customer/forms/show-recommended-forms?customer_id=3002",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"v1",
+								"customer",
+								"forms",
+								"show-recommended-forms"
+							],
+							"query": [
+								{
+									"key": "customer_id",
+									"value": "3002"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unsave Form",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/v1/customer/unsave-form/12706?product_id=5254543543",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customer",
+								"unsave-form",
+								"12706"
+							],
+							"query": [
+								{
+									"key": "product_id",
+									"value": "5254543543"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save Form",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/api/v1/customer/save-form/12706?product_id=302",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"v1",
+								"customer",
+								"save-form",
+								"12706"
+							],
+							"query": [
+								{
+									"key": "product_id",
+									"value": "302"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Document",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJkYTQ3N2U3MS05Y2I2LTQ4NmUtYjNmYy1kNGI2OWE4NTFlZjkiLCJpZCI6NSwicm9sZSI6NCwiaXBBZGRyZXNzIjoiMDowOjA6MDowOjA6MDoxIiwiaWF0IjoxNzI3MjQxMDExLCJleHAiOjE3MjcyNzcwMTF9.WBa1xL1hU2BVIY2NHcpGa8aEC037-E4JluqfEF5ql9g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": "/C:/Users/Tarun/Downloads/fff.png"
+								},
+								{
+									"key": "fileTypes",
+									"value": "8",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/v1/customer/upload-documents?customerId=102",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customer",
+								"upload-documents"
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "102"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Document",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/api/v1/document/get-document-of-customer?customerId=46101",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"v1",
+								"document",
+								"get-document-of-customer"
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "46101"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RetrieveCustomerDetails",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/v1/customer/get-customer-details/10118",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customer",
+								"get-customer-details",
+								"10118"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all customers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/v1/customer/get-all-customers?page=1&limit=5",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customer",
+								"get-all-customers"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set Referrer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/v1/customer/set-referrer/1879/2",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customer",
+								"set-referrer",
+								"1879",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All documents",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/v1/document/get-all-document",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"document",
+								"get-all-document"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vendor APis",
+			"item": [
+				{
+					"name": "create Status for Service Provider",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status_name\":\"DUMMY_STATUS\"\r\n    // \"description\":\"DUMMY FROM SUPER ADMIN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://3bb8-203-190-154-106.ngrok-free.app/api/v1/service-provider-status/add-status",
+							"protocol": "https",
+							"host": [
+								"3bb8-203-190-154-106",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"service-provider-status",
+								"add-status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add address for service provider",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI3ZjBjZmZiMC1lMzgwLTQ2ZDgtYTRhNi01MDk5OWIwODgzMTAiLCJpZCI6Miwicm9sZSI6NSwiaXBBZGRyZXNzIjoiMDowOjA6MDowOjA6MDoxIiwidXNlckFnZW50IjoiUG9zdG1hblJ1bnRpbWUvNy40MS4yIiwiaWF0IjoxNzI0NjQ5ODU5LCJleHAiOjE3MjQ2ODU4NTl9.ZZoc0M8AhJak72_YpT3fgToJhicb3Dr_p7-lgV0jfvg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ // Normally auto-generated, but if needed for testing, you can include it\r\n  \"address_type_id\": 2,\r\n  \"district\": \"1\",\r\n  \"street\": \"123 Elm Street\",\r\n  \"state\": \"9\",\r\n  \"landmark\": \"Near Central Park\",\r\n  \"pincode\": \"90001\",\r\n  \"serviceProviderEntity\": {\r\n    \"id\": 10  // Assuming `ServiceProviderEntity` has an `id` field\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cf3d-203-190-154-106.ngrok-free.app/api/v1/service-providers/addAddress?serviceProviderId=2",
+							"protocol": "https",
+							"host": [
+								"cf3d-203-190-154-106",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"service-providers",
+								"addAddress"
+							],
+							"query": [
+								{
+									"key": "serviceProviderId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Service Provider Info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/v1/otp/get-service-provider?userId=1",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"otp",
+								"get-service-provider"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create or Update Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\":\"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/v1/vendor/create-or-update-password?userId=1",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"vendor",
+								"create-or-update-password"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Service Provider",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5NTA0YTNlNy1lYTE0LTQyMmItYjczYy1kNDY2ODgxZDk0YzIiLCJpZCI6Mywicm9sZSI6NCwiaXBBZGRyZXNzIjoiMDowOjA6MDowOjA6MDoxIiwidXNlckFnZW50IjoiUG9zdG1hblJ1bnRpbWUvNy40MS4yIiwiaWF0IjoxNzI0NzQ0NDE3LCJleHAiOjE3MjQ3ODA0MTd9.G-p_A-r6rxrzvNDlmacHdnx0h3krOEy45JN2NfuVWx0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://cf3d-203-190-154-106.ngrok-free.app/api/v1/service-providers/delete?userId=3",
+							"protocol": "https",
+							"host": [
+								"cf3d-203-190-154-106",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"service-providers",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign a skill",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJmZGJmNGVmNC1lNWQyLTQwNGMtOTk2ZS1jYTY5NjM2M2I3NjkiLCJpZCI6NCwicm9sZSI6NCwiaXBBZGRyZXNzIjoiMDowOjA6MDowOjA6MDoxIiwidXNlckFnZW50IjoiUG9zdG1hblJ1bnRpbWUvNy40MS4yIiwiaWF0IjoxNzI0NzQ1NjE3LCJleHAiOjE3MjQ3ODE2MTd9.fRMVT8HJecnQZQwfDyW0z13NQz2dqpYJUymvS2ZD6nE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://cf3d-203-190-154-106.ngrok-free.app/api/v1/service-providers/assign-skill?serviceProviderId=4&skillId=3",
+							"protocol": "https",
+							"host": [
+								"cf3d-203-190-154-106",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"service-providers",
+								"assign-skill"
+							],
+							"query": [
+								{
+									"key": "serviceProviderId",
+									"value": "4"
+								},
+								{
+									"key": "skillId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get districts",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cf3d-203-190-154-106.ngrok-free.app/api/v1/districts/get-districts?state_code=HP",
+							"protocol": "https",
+							"host": [
+								"cf3d-203-190-154-106",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"districts",
+								"get-districts"
+							],
+							"query": [
+								{
+									"key": "state_code",
+									"value": "HP"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get states",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/v1/states/get-states",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"states",
+								"get-states"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RetrieveServiceProviderDetails",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzY2ZmZDIyMS03Njc5LTRkMmUtOGExMS0zODJmNzA4ZmQ2MjQiLCJpZCI6MTMsInJvbGUiOjQsImlwQWRkcmVzcyI6IjA6MDowOjA6MDowOjA6MSIsImlhdCI6MTcyNjU1ODE4MywiZXhwIjoxNzI2NTk0MTgzfQ.bHMe3pBZ4K-wEDvLs8-tURz3yR8PDEInPzFb81Gbnok",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/v1/service-providers/get-all-details/1",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"service-providers",
+								"get-all-details",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Service Provider Filter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/v1/service-providers/filter-service-provider?first_name=kSHITIJ",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"service-providers",
+								"filter-service-provider"
+							],
+							"query": [
+								{
+									"key": "district",
+									"value": "Chamba",
+									"disabled": true
+								},
+								{
+									"key": "first_name",
+									"value": "kSHITIJ"
+								},
+								{
+									"key": "last_name",
+									"value": "vats",
+									"disabled": true
+								},
+								{
+									"key": "state",
+									"value": "Himachal Pradesh",
+									"disabled": true
+								},
+								{
+									"key": "mobileNumber",
+									"value": "7508752030",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Service Provider's Reffered Candidate",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/v1/service-providers/show-referred-candidates/131",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"service-providers",
+								"show-referred-candidates",
+								"131"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Vendors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/v1/vendor/get-all-vendors?page=0&limit=10",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"vendor",
+								"get-all-vendors"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetService Providers who completes the test",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyZTkyMjg3Yi1kYmQxLTQ2ODQtOGJkMS1hZmRiNmMwNTFlYTYiLCJpZCI6Nzg1Miwicm9sZSI6NSwiaXBBZGRyZXNzIjoiMDowOjA6MDowOjA6MDoxIiwiaWF0IjoxNzI2ODE0NjE3LCJleHAiOjE3MjY4NTA2MTd9.frZNAW9P-jVJ8Pmm4hPf0L56GQmZJUPV73lsAkAYQyI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "/{serviceProviderId}/order-requests",
+							"path": [
+								"{serviceProviderId}",
+								"order-requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Resolve Order Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/v1/service-providers/3/order-requests/11?action=accept",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"service-providers",
+								"3",
+								"order-requests",
+								"11"
+							],
+							"query": [
+								{
+									"key": "action",
+									"value": "accept"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Order Requests",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/v1/service-providers/1/order-requests?requestStatus=new",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"service-providers",
+								"1",
+								"order-requests"
+							],
+							"query": [
+								{
+									"key": "requestStatus",
+									"value": "new"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/v1/service-providers/3/completeOrder/11?statusId=8",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"service-providers",
+								"3",
+								"completeOrder",
+								"11"
+							],
+							"query": [
+								{
+									"key": "statusId",
+									"value": "8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update service provider details",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"first_name\": \"Celestial\",\r\n  \"last_name\": \"Lucknow\",\r\n  \"primary_email\": \"john.doe_updated@example.com\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/v1/vendor/update?userId=1",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"vendor",
+								"update"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "submit vendor submission details",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"John Doe\",\r\n  \"email\": \"johndoe@example.com\",\r\n  \"planName\": \"Premium Plan\",\r\n  \"socialMediaUrls\": {\r\n    \"youtube\": \"https://www.youtube.com/channel/UCnYf_VDI0Dr4HDF_4NFnCgQ\",\r\n    \"snapchat\": \"https://www.snapchat.com/add/johndoe\"\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/v1/vendor-submission/submit/1",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"vendor-submission",
+								"submit",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validate Links",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/v1/url/validate?url=https://www.youtube.com/channel/UCnYf_VDI0Dr4HDF_4NFnCgQ&platform=youtube",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"url",
+								"validate"
+							],
+							"query": [
+								{
+									"key": "url",
+									"value": "https://www.youtube.com/channel/UCnYf_VDI0Dr4HDF_4NFnCgQ"
+								},
+								{
+									"key": "platform",
+									"value": "youtube"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update submission details",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"planName\": \"New Plan\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/v1/vendor-submission/update/1",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"vendor-submission",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get vendor submission data by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/v1/vendor-submission/get/1",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"vendor-submission",
+								"get",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Account/Login Module",
+			"item": [
+				{
+					"name": "Otp with number/username",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"mobileNumber\":\"9838511476\",\r\n\"role\":4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/v1/account/login-with-otp",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"account",
+								"login-with-otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login via number/username with password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mobileNumber\":\"9838511476\",\r\n    \"password\":\"12345\",\r\n    \"role\":4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/v1/account/login-with-password",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"account",
+								"login-with-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Otp",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"mobileNumber\":\"9838511476\",\r\n\"role\":4,\r\n\"otpEntered\":\"5336\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/v1/otp/verify-otp",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"otp",
+								"verify-otp"
+							],
+							"query": [
+								{
+									"key": "otpEntered",
+									"value": "4743",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Send otp",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"mobileNumber\": \"8576858549\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/v1/otp/send-otp",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"otp",
+								"send-otp"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Vendor  Signup",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n            \"mobileNumber\":\"983851125\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/v1/otp/vendor-signup",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"otp",
+								"vendor-signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AdminLogin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"mobileNumber\":\"9872548680\",\r\n\"role\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/v1/account/admin-login-with-otp",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"account",
+								"admin-login-with-otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Admin with username",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"admin\",  \r\n    \"password\":\"Admin#01\",\r\n    \"role\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/account/login-with-username",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"account",
+								"login-with-username"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/v1/customer/logout",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customer",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Admin/Support Signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"mobileNumber\":\"98725486870\",\r\n\"role\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/v1/otp/admin-signup",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"otp",
+								"admin-signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login with password admin/support",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"mobileNumber\":\"9872548680\",\r\n\"role\":1,\r\n\"password\":\"newPassweeeord123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/v1/account/admin-login-with-password",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"account",
+								"admin-login-with-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login with otp admin/support",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"mobileNumber\":\"9872548680\",\r\n\"role\":7\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/v1/account/admin-login-with-otp",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"account",
+								"admin-login-with-otp"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Create Role",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role_name\":\"DUMMY_ROLE_2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cf3d-203-190-154-106.ngrok-free.app/api/v1/roles/add-role",
+							"protocol": "https",
+							"host": [
+								"cf3d-203-190-154-106",
+								"ngrok-free",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"roles",
+								"add-role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get List of Roles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/v1/roles/get-roles",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"roles",
+								"get-roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get List of Status",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5ZTM1ZjNmMS0yZjAzLTRmNTUtYjAzYi1lMzI5MzRlMmFjMzAiLCJpZCI6Miwicm9sZSI6NCwiaXBBZGRyZXNzIjoiMDowOjA6MDowOjA6MDoxIiwidXNlckFnZW50IjoiUG9zdG1hblJ1bnRpbWUvNy40MS4yIiwiaWF0IjoxNzI0NzE3ODY3LCJleHAiOjE3MjQ3NTM4Njd9.dIrfVHcGjJbkm-ceWim6vr-l0dyWZ6pdEHatR0CppdA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/api/v1/serviceProvidersStatus/getStatusList",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"v1",
+								"serviceProvidersStatus",
+								"getStatusList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Submission by status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/v1/vendor-submission/status?status=all",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"vendor-submission",
+								"status"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "all"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approve submissions",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/v1/adminreview/approve/1",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"adminreview",
+								"approve",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reject Submissions",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/v1/adminreview/reject/1",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"adminreview",
+								"reject",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Admin/Support role and password",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_name\": \"newAdminName\",\r\n    \"password\": \"newPassword123\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/v1/admin/update?userId=1",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"update"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Test",
+			"item": [
+				{
+					"name": "Sanitize the input Map",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI0MDJmZDM5OS05YWM1LTRiNzItYWQ3Mi1lYmI2NWFmZjZlMzUiLCJpZCI6NzIwMiwicm9sZSI6NSwiaXBBZGRyZXNzIjoiMDowOjA6MDowOjA6MDoxIiwiaWF0IjoxNzI2NTU3ODE2LCJleHAiOjE3MjY1OTM4MTZ9.mez2Fq4wGcAABCwR_gT721nT6ex3xB9kNBeAHJYU6IE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"testuser\",\r\n  \"password\": \"password123\",\r\n  \"email\": \"test@example.com\",\r\n  \"comment\": \"<script>alert('XSS');</script>\",\r\n  \"searchQuery\": \"SELECT * FROM users WHERE username = 'admin' --\",\r\n  \"profileDescription\": \"Hello, I'm a regular user.\",\r\n  \"feedback\": \"<img src='x' onerror='alert(document.cookie)' />\",\r\n  \"age\": \"25\",\r\n  \"address\": \"123 Fake Street\",\r\n  \"script\":\"DROP TABLE\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/v1/test/test-sanitizer",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"test",
+								"test-sanitizer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Inser Document type",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/api/v1/test/api/data-entry?userId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"v1",
+								"test",
+								"api",
+								"data-entry"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Email",
+			"item": [
+				{
+					"name": "notification",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJjOWVmZDczZC1lMDhjLTQxZjItYTI3ZS0yMGNkNTcxZTM1ZmEiLCJpZCI6MTAsInJvbGUiOjQsImlwQWRkcmVzcyI6IjA6MDowOjA6MDowOjA6MSIsImlhdCI6MTcyNjQ3MTA4OCwiZXhwIjoxNzI2NTA3MDg4fQ.yDSn8oJEod0zkGa1xruQQotIsO9tX-dvE9CpbK_PQ7A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/api/v1/notification/notify/5702",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"v1",
+								"notification",
+								"notify",
+								"5702"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bank Details",
+			"item": [
+				{
+					"name": "Bank account (Need to add)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customerName\": \"654654665\",\r\n    \"accountNumber\": \"1264567835\",\r\n    \"reEnterAccountNumber\": \"1264567835\",\r\n    \"ifscCode\": \"ABCD1234567\",\r\n    \"bankName\": \"XYZ Bank\",\r\n    \"branchName\": \"Main Branch\",\r\n    \"accountType\": \"Saving\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/v1/bank-account/add/1",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bank-account",
+								"add",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Bank Account",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/v1/bank-account/get/102",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bank-account",
+								"get",
+								"102"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Bank Account",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"branchName\": \"New Branch Name hai\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/v1/bank-account/update/1",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bank-account",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Bank account",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/v1/bank-account/get/102",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bank-account",
+								"get",
+								"102"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment",
+			"item": [
+				{
+					"name": "Create Payment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"amount\": 1000.50,\r\n  \"planName\": \"Premium Plan\",\r\n  \"dailyLimit\": 10,\r\n  \"weeklyLimit\": 50,\r\n  \"planDuration\": \"Monthly\",  \r\n  \"paymentType\": \"RECURRING\", \r\n  \"isTest\": true \r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/v1/payments/create/1",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"payments",
+								"create",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Payment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/v1/payments/getPaymentsByVendor/1",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"payments",
+								"getPaymentsByVendor",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Game Apis",
+			"item": [
+				{
+					"name": "Publish Game",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Trivia Challenge\",\r\n  \"description\": \"A fun trivia game to test your knowledge!\",\r\n  \"entryFee\": 10.0,\r\n  \"themeId\": 1,\r\n  \"scheduledAt\": \"2026-08-30 23:59:59\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/v1/games/publishGame/1",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"games",
+								"publishGame",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Games",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/v1/games/get-all-games?page=0&size=10",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"games",
+								"get-all-games"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Active games by vendor id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/api/v1/games/get-games-by-vendor/1?page=0&size=10",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"games",
+								"get-games-by-vendor",
+								"1"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Updated Game Name\",\r\n  \"description\": \"This is the updated description of the game.\",\r\n  \"entryFee\": 75.0,\r\n  \"status\": \"SCHEDULED\",\r\n  \"scheduledAt\": \"2024-12-01T15:00:00Z\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/v1/games/update-statuses/1/1",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"games",
+								"update-statuses",
+								"1",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyMDllODgwNy1mMDAzLTRlN2EtOGU0YS1hOWZhNDdjMGY5MzEiLCJpZCI6MSwicm9sZSI6NCwidXNlckFnZW50IjoiUG9zdG1hblJ1bnRpbWUvNy40Mi4wIiwiaXBBZGRyZXNzIjoiMDowOjA6MDowOjA6MDoxIiwiaWF0IjoxNzMyNjgzNzA4LCJleHAiOjE3MzI3MTk3MDh9.nPYZzPBIgomXaKd63SFrG89FmcGZd3kqRO_7MsSKZqo",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseurl",
+			"value": "https://da65-203-190-154-106.ngrok-free.app",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "baseurl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "baseurl",
+			"value": "https://e52d2d1bccc8.ngrok.app",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "baseurl",
+			"value": "https://cb33-203-190-154-106.ngrok-free.app",
+			"type": "string",
+			"disabled": true
+		}
+	]
+}

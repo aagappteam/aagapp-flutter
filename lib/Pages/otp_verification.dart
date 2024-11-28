@@ -1,4 +1,7 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:AAG/Pages/otp_veri.dart';
+import 'package:AAG/Pages/otpservice.dart';
 import 'package:AAG/Pages/signup.dart';
 import 'package:AAG/tobeadded/gradient_button.dart';
 import 'package:AAG/tobeadded/promo_slider.dart';
@@ -21,9 +24,12 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
       List.generate(4, (_) => TextEditingController());
   final List<FocusNode> _focusNodes = List.generate(4, (_) => FocusNode());
 
+  final OtpService _otpService = OtpService();
+
   int _timerSeconds = 30;
   Timer? _timer;
   double _initialChildSize = 0.5;
+  bool _isVerifying = false;
 
   @override
   void initState() {
@@ -52,6 +58,93 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
     });
   }
 
+  // Method to collect OTP from text fields
+  String _getEnteredOtp() {
+    return _otpControllers.map((controller) => controller.text).join();
+  }
+
+  // Method to verify OTP
+  Future<void> _verifyOtp() async {
+    // Validate OTP length
+    final enteredOtp = _getEnteredOtp();
+    if (enteredOtp.length != 4) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter a 4-digit OTP')),
+      );
+      return;
+    }
+
+    // Set verifying state
+    setState(() {
+      _isVerifying = true;
+    });
+
+    try {
+      // Call OTP verification service
+      final result = await _otpService.verifyOtp(
+          mobileNumber: widget.phoneNumber,
+          role: UserRole.CUSTOMER,
+          otpEntered: enteredOtp);
+
+      // Handle verification result
+      if (result['success']) {
+        // Navigate to next page on successful verification
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => SignUpPage2(
+              selectedPlan: widget.selectedPlan,
+              phoneNumber: widget.phoneNumber,
+            ),
+          ),
+        );
+      } else {
+        // Show error message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(result['message'])),
+        );
+      }
+    } catch (e) {
+      // Handle any unexpected errors
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Verification failed: $e')),
+      );
+    } finally {
+      // Reset verifying state
+      setState(() {
+        _isVerifying = false;
+      });
+    }
+  }
+
+  // Method to resend OTP
+  Future<void> _resendOtp() async {
+    if (_timerSeconds > 0) return;
+
+    try {
+      final result = await _otpService.sendCustomerOtp(widget.phoneNumber);
+
+      if (result['success']) {
+        // Reset timer
+        setState(() {
+          _timerSeconds = 30;
+        });
+        _startTimer();
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('OTP Resent Successfully')),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(result['message'])),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to resend OTP: $e')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +167,7 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
             ],
           ),
           DraggableScrollableSheet(
-            initialChildSize: _initialChildSize,
+            initialChildSize: 0.5,
             minChildSize: 0.5,
             maxChildSize: 0.6,
             builder: (BuildContext context, ScrollController scrollController) {
@@ -192,17 +285,8 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
                         const SizedBox(height: 50),
                         Center(
                           child: CustomButton(
-                            onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => SignUpPage2(
-                                    selectedPlan: widget.selectedPlan,
-                                    phoneNumber: widget.phoneNumber,
-                                  ),
-                                ),
-                              );
-                            },
-                            text: 'Verify OTP',
+                            onTap: _isVerifying ? null : _verifyOtp,
+                            text: _isVerifying ? 'Verifying...' : 'Verify OTP',
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -219,6 +303,18 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
                               style: const TextStyle(
                                   color: Colors.orange, fontSize: 18),
                             ),
+                            if (_timerSeconds == 0)
+                              GestureDetector(
+                                onTap: _resendOtp,
+                                child: const Text(
+                                  ' Resend',
+                                  style: TextStyle(
+                                    color: Colors.blue,
+                                    fontSize: 18,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              ),
                           ],
                         ),
                       ],

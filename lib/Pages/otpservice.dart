@@ -18,7 +18,8 @@ enum UserRole {
 
 class OtpService {
   // Base URL for the API
-  static const String baseUrl = 'https://your-actual-base-url.com/api/v1';
+  static const String baseUrl =
+      'https://ce3e-2409-40e3-1024-c0d1-c840-b228-f755-3df4.ngrok-free.app';
 
   // Method to send OTP for customer login
   Future<Map<String, dynamic>> sendCustomerOtp(String mobileNumber) async {
@@ -26,12 +27,13 @@ class OtpService {
       final requestBody = json.encode({'mobileNumber': mobileNumber});
 
       final response = await http.post(
-        Uri.parse('$baseUrl/otp/send-otp'),
+        Uri.parse('$baseUrl/api/v1/otp/send-otp'),
         headers: {'Content-Type': 'application/json'},
         body: requestBody,
       );
 
       final responseBody = json.decode(response.body);
+      print(responseBody);
 
       if (response.statusCode == 200) {
         return {
@@ -64,18 +66,19 @@ class OtpService {
       });
 
       final response = await http.post(
-        Uri.parse('$baseUrl/otp/verify-otp'),
+        Uri.parse('$baseUrl/api/v1/otp/verify-otp'),
         headers: {'Content-Type': 'application/json'},
         body: requestBody,
       );
 
       final responseBody = json.decode(response.body);
+      print(responseBody); // Added for debugging
 
       if (response.statusCode == 200) {
         return {
           'success': true,
           'message': responseBody['message'],
-          'userDetails': responseBody['data']['userDetails'],
+          'userDetails': responseBody['data']?['userDetails'],
           'token': responseBody['token']
         };
       } else {
@@ -129,7 +132,7 @@ class OtpService {
       final requestBody = json.encode({'mobileNumber': mobileNumber});
 
       final response = await http.post(
-        Uri.parse('$baseUrl/otp/vendor-signup'),
+        Uri.parse('$baseUrl/api/v1/otp/vendor-signup'),
         headers: {'Content-Type': 'application/json'},
         body: requestBody,
       );
@@ -168,7 +171,7 @@ class OtpService {
       });
 
       final response = await http.post(
-        Uri.parse('$baseUrl/account/login-with-password'),
+        Uri.parse('$baseUrl/api/v1/account/login-with-password'),
         headers: {'Content-Type': 'application/json'},
         body: requestBody,
       );

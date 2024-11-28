@@ -1,5 +1,8 @@
+// ignore_for_file: use_build_context_synchronously, unused_field
+
 import 'package:AAG/Pages/login_vendor.dart';
-import 'package:AAG/Pages/package_screen.dart';
+import 'package:AAG/Pages/otpservice.dart';
+import 'package:AAG/Pages/package_screen.dart'; // Import the OtpService
 import 'package:AAG/tobeadded/promo_slider.dart';
 import 'package:flutter/material.dart';
 import '../tobeadded/gradient_button.dart';
@@ -24,8 +27,11 @@ class _SignUpPageState extends State<SignUpPage> {
 
   final TextEditingController _phoneController = TextEditingController();
   final FocusNode _phoneFocusNode = FocusNode();
+  final OtpService _otpService =
+      OtpService(); // Create an instance of OtpService
   double _initialChildSize = 0.5;
   String selectedCountry = 'IN'; // Default to India
+  bool _isLoading = false; // Add loading state
 
   @override
   void initState() {
@@ -84,6 +90,62 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
+  void _sendVendorSignupOtp() async {
+    // Validate phone number
+    if (_phoneController.text.isEmpty) {
+      _otpService.showErrorDialog(context, 'Please enter a phone number');
+      return;
+    }
+
+    // Construct full phone number
+    String fullPhoneNumber =
+        '${countries[selectedCountry]!['code']!}${_phoneController.text}';
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      // Call vendor signup OTP method
+      Map<String, dynamic> response =
+          await _otpService.sendVendorSignupOtp(fullPhoneNumber);
+
+      if (response['success']) {
+        // Navigate to OTP Verification Page
+        Navigator.of(context).pushReplacement(
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                OTPVerificationPage(
+              phoneNumber: fullPhoneNumber,
+              selectedPlan: widget.selectedPlan,
+            ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              var begin = const Offset(1.0, 0.0);
+              var end = Offset.zero;
+              var curve = Curves.easeInOut;
+              var tween =
+                  Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+              var offsetAnimation = animation.drive(tween);
+              return SlideTransition(position: offsetAnimation, child: child);
+            },
+            transitionDuration: const Duration(milliseconds: 800),
+          ),
+        );
+      } else {
+        // Show error dialog if OTP sending fails
+        _otpService.showErrorDialog(context, response['message']);
+      }
+    } catch (e) {
+      _otpService.showErrorDialog(
+          context, 'An error occurred while sending OTP');
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,7 +168,7 @@ class _SignUpPageState extends State<SignUpPage> {
             ],
           ),
           DraggableScrollableSheet(
-            initialChildSize: _initialChildSize,
+            initialChildSize: 0.5,
             minChildSize: 0.5,
             maxChildSize: 0.6,
             builder: (BuildContext context, ScrollController scrollController) {
@@ -217,40 +279,13 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         const SizedBox(height: 50),
                         Center(
-                          child: CustomButton(
-                            onTap: () {
-                              // Concatenate selected country code with phone number
-                              String fullPhoneNumber =
-                                  '${countries[selectedCountry]!['code']}${_phoneController.text}';
-
-                              Navigator.of(context).pushReplacement(
-                                PageRouteBuilder(
-                                  pageBuilder: (context, animation,
-                                          secondaryAnimation) =>
-                                      OTPVerificationPage(
-                                    phoneNumber: fullPhoneNumber,
-                                    selectedPlan: widget.selectedPlan,
-                                  ),
-                                  transitionsBuilder: (context, animation,
-                                      secondaryAnimation, child) {
-                                    var begin = const Offset(1.0, 0.0);
-                                    var end = Offset.zero;
-                                    var curve = Curves.easeInOut;
-                                    var tween = Tween(begin: begin, end: end)
-                                        .chain(CurveTween(curve: curve));
-                                    var offsetAnimation =
-                                        animation.drive(tween);
-                                    return SlideTransition(
-                                        position: offsetAnimation,
-                                        child: child);
-                                  },
-                                  transitionDuration:
-                                      const Duration(milliseconds: 800),
+                          child: _isLoading
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white)
+                              : CustomButton(
+                                  onTap: _sendVendorSignupOtp,
+                                  text: 'Send OTP',
                                 ),
-                              );
-                            },
-                            text: 'Send OTP',
-                          ),
                         ),
                         const SizedBox(height: 20),
                         Row(
@@ -297,7 +332,7 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           ),
           Positioned(
-            top: 50, // 15 pixels from the top
+            top: 50,
             left: -(MediaQuery.of(context).size.width * 0.84),
             right: 0,
             child: GestureDetector(

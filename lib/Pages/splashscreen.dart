@@ -9,6 +9,7 @@ import 'package:AAG/DailyTaskScreen/dailytaskscreen.dart';
 import 'package:AAG/FAQScreen/faq_screen_1.dart';
 import 'package:AAG/Notification_Screen/notification_screen.dart';
 import 'package:AAG/Pages/login_vendor.dart';
+import 'package:AAG/Pages/otp_verification.dart';
 import 'package:AAG/Pages/successverificationscreen.dart';
 import 'package:AAG/PublishGameScreen/publishscreen.dart';
 import 'package:AAG/PublishGameScreen/gamescreen2.dart';
@@ -68,7 +69,10 @@ class _SplashscreenState extends State<Splashscreen>
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-              LoginScreen(),
+              OTPVerificationPage(
+            phoneNumber: '',
+            selectedPlan: '',
+          ),
           // LoginVendor(
           //   selectedPlan: '',
           // ),

@@ -1,18 +1,25 @@
-import 'package:AAG/PublishGameScreen/gamescreen2.dart';
+// ignore_for_file: constant_identifier_names
+
 import 'package:AAG/LeagueScreen/leaguescreen_one.dart';
+import 'package:AAG/PublishGameScreen/gamescreen2.dart';
+import 'package:AAG/PublishGameScreen/leaguescreenpage.dart';
+import 'package:AAG/PublishGameScreen/ludogamescreen.dart';
+import 'package:AAG/PublishGameScreen/tournamentscreenpage.dart';
 import 'package:AAG/TournamentScreen/tournamentscreen_one.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:async';
 
-class AppGamesScreen extends StatefulWidget {
-  const AppGamesScreen({super.key});
+enum HistoryType { Games, Leagues, Tournament }
+
+class PublishGamesScreen extends StatefulWidget {
+  const PublishGamesScreen({super.key});
 
   @override
-  State<AppGamesScreen> createState() => _AppGamesScreenState();
+  State<PublishGamesScreen> createState() => _PublishGamesScreenState();
 }
 
-class _AppGamesScreenState extends State<AppGamesScreen>
+class _PublishGamesScreenState extends State<PublishGamesScreen>
     with SingleTickerProviderStateMixin {
   int revealedCount = 1;
   late TabController _tabController;
@@ -42,20 +49,13 @@ class _AppGamesScreenState extends State<AppGamesScreen>
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final horizontalPadding = screenSize.width * 0.02; // 2% of screen width
+    final verticalSpacing = screenSize.height * 0.02; // 2% of screen height
+    final enhancedSpacing = screenSize.height * 0.03; // 3% for enhanced spacing
+
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text(
-          'GAMES',
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -65,31 +65,71 @@ class _AppGamesScreenState extends State<AppGamesScreen>
         ),
         child: Column(
           children: [
-            const SizedBox(height: kToolbarHeight + 20),
-            _buildDailyLimit(context),
-            // Publish/History Toggle
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            // Updated AppBar section to match ReferAndEarnScreen
+            Padding(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).padding.top + 8,
+                left: 8,
+                right: 8,
+                bottom: 8,
+              ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _buildTabButton('PUBLISH', isPublishSelected, () {
-                    setState(() {
-                      isPublishSelected = true;
-                    });
-                  }),
-                  const SizedBox(width: kToolbarHeight - 20),
-                  _buildTabButton('HISTORY', !isPublishSelected, () {
-                    setState(() {
-                      isPublishSelected = false;
-                    });
-                  }),
+                  IconButton(
+                    icon: const Icon(Icons.arrow_back, color: Colors.white),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  const Text(
+                    'GAMES',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+              child: _buildDailyLimit(context),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(
+                horizontal: horizontalPadding,
+                vertical: verticalSpacing - 10,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _buildTabButton('PUBLISH', isPublishSelected, () {
+                          setState(() => isPublishSelected = true);
+                        }),
+                        SizedBox(width: screenSize.width * 0.06),
+                        _buildTabButton('HISTORY', !isPublishSelected, () {
+                          setState(() => isPublishSelected = false);
+                        }),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin:
+                        EdgeInsets.symmetric(vertical: verticalSpacing * 0.5),
+                    height: 1,
+                    color: Colors.white,
+                    width: double.infinity,
+                  ),
                 ],
               ),
             ),
             if (!isPublishSelected) ...[
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16),
+                margin: EdgeInsets.symmetric(horizontal: horizontalPadding),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(color: Colors.orange.withOpacity(0.5)),
@@ -98,60 +138,90 @@ class _AppGamesScreenState extends State<AppGamesScreen>
                   children: [
                     Expanded(
                       child: _buildToggleButton('Games', isGamesSelected, () {
-                        setState(() {
-                          isGamesSelected = true;
-                        });
+                        setState(() => isGamesSelected = true);
                       }),
                     ),
                     Expanded(
                       child: _buildToggleButton('Event', !isGamesSelected, () {
-                        setState(() {
-                          isGamesSelected = false;
-                        });
+                        setState(() => isGamesSelected = false);
                       }),
                     ),
                   ],
                 ),
               ),
-              // League/Tournament Toggle (only visible when Event is selected)
               if (!isGamesSelected)
                 Container(
-                  margin: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.orange.withOpacity(0.5)),
+                  margin: EdgeInsets.symmetric(
+                    horizontal: horizontalPadding,
+                    vertical: verticalSpacing,
                   ),
-                  child: Row(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Expanded(
-                        child:
-                            _buildToggleButton('Leagues', isLeagueSelected, () {
-                          setState(() => isLeagueSelected = true);
-                        }),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          _buildTabButton('Leagues', isLeagueSelected, () {
+                            setState(() => isLeagueSelected = true);
+                          }),
+                          SizedBox(width: screenSize.width * 0.06),
+                          _buildTabButton('Tournament', !isLeagueSelected, () {
+                            setState(() => isLeagueSelected = false);
+                          }),
+                        ],
                       ),
-                      Expanded(
-                        child: _buildToggleButton(
-                            'Tournament', !isLeagueSelected, () {
-                          setState(() => isLeagueSelected = false);
-                        }),
+                      Container(
+                        margin: EdgeInsets.only(top: verticalSpacing * 0.5),
+                        height: 1,
+                        color: Colors.white,
+                        width: double.infinity,
                       ),
                     ],
                   ),
-                ),
+                )
             ],
             Expanded(
               child: isPublishSelected
                   ? ListView(
-                      padding: const EdgeInsets.only(top: 10),
+                      padding: EdgeInsets.only(
+                        top: 0,
+                        left: horizontalPadding,
+                        right: horizontalPadding,
+                      ),
                       children: [
-                        _buildSection(context, 'PUBLISH', 'lib/images/ic3.png',
-                            'Games', 5),
-                        _buildSection(context, 'EVENTS', 'lib/images/ic3.png',
-                            'Leagues', 2),
-                        _buildSection(context, '', '', 'Tournament', 2),
+                        _buildSection(
+                          context,
+                          'PUBLISH',
+                          'lib/images/ic3.png',
+                          'Games',
+                          5,
+                          verticalSpacing: verticalSpacing,
+                        ),
+                        SizedBox(height: enhancedSpacing),
+                        _buildSection(
+                          context,
+                          'EVENTS',
+                          'lib/images/ic3.png',
+                          'Leagues',
+                          2,
+                          verticalSpacing: verticalSpacing,
+                        ),
+                        SizedBox(height: verticalSpacing),
+                        _buildSection(
+                          context,
+                          '',
+                          '',
+                          'Tournament',
+                          2,
+                          verticalSpacing: verticalSpacing,
+                        ),
                       ],
                     )
-                  : _buildHistoryContent(),
+                  : Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: horizontalPadding),
+                      child: _buildHistoryContent(),
+                    ),
             ),
           ],
         ),
@@ -169,7 +239,7 @@ class _AppGamesScreenState extends State<AppGamesScreen>
           style: TextStyle(
             color: isSelected ? Colors.orange : Colors.white,
             fontWeight: FontWeight.bold,
-            fontSize: 22,
+            fontSize: 16,
           ),
         ),
       ),
@@ -180,17 +250,27 @@ class _AppGamesScreenState extends State<AppGamesScreen>
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        padding: const EdgeInsets.symmetric(
+            vertical: 8, horizontal: 16), // Reduced padding
         decoration: BoxDecoration(
-          color: isSelected ? Colors.orange : Colors.transparent,
-          borderRadius: BorderRadius.circular(8),
+          color: isSelected ? Colors.white10 : Colors.transparent,
+          borderRadius: BorderRadius.circular(12), // Smaller corner radius
+          // border: Border.all(
+          //   color: isSelected
+          //       ? Colors.orange
+          //       : Colors.white.withOpacity(0.5), // Add subtle border
+          //   width: 1,
+          // ),
         ),
         child: Center(
           child: Text(
             text,
             style: TextStyle(
+              fontSize: 14, // Reduced font size
               color: Colors.white,
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+              fontWeight: isSelected
+                  ? FontWeight.w600
+                  : FontWeight.w400, // Subtle weight difference
             ),
           ),
         ),
@@ -254,7 +334,7 @@ class _AppGamesScreenState extends State<AppGamesScreen>
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
-                              fontSize: 18,
+                              fontSize: 16,
                             ),
                           ),
                           Container(
@@ -268,7 +348,7 @@ class _AppGamesScreenState extends State<AppGamesScreen>
                             style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
-                              fontSize: 18,
+                              fontSize: 16,
                             ),
                           ),
                         ],
@@ -316,13 +396,14 @@ class _AppGamesScreenState extends State<AppGamesScreen>
   }
 
   Widget _buildSection(BuildContext context, String title, String iconPath,
-      String subtitle, int gameCount) {
+      String subtitle, int gameCount,
+      {required double verticalSpacing}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (title.isNotEmpty)
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(10),
             child: Row(
               children: [
                 Image.asset(iconPath, width: 24, height: 24),
@@ -331,7 +412,7 @@ class _AppGamesScreenState extends State<AppGamesScreen>
                   title,
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 24,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -339,10 +420,10 @@ class _AppGamesScreenState extends State<AppGamesScreen>
             ),
           ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 25),
           child: Text(
             subtitle,
-            style: const TextStyle(color: Colors.white, fontSize: 16),
+            style: const TextStyle(color: Colors.white, fontSize: 14),
           ),
         ),
         GridView.count(
@@ -361,7 +442,7 @@ class _AppGamesScreenState extends State<AppGamesScreen>
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const GamesScreen(),
+                        builder: (context) => const PublishLudoScreen(),
                       ),
                     );
                     break;
@@ -369,7 +450,7 @@ class _AppGamesScreenState extends State<AppGamesScreen>
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const LeagueScreen(),
+                        builder: (context) => const PublishLeagueScreen(),
                       ),
                     );
                     break;
@@ -377,21 +458,17 @@ class _AppGamesScreenState extends State<AppGamesScreen>
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const Tournamentscreen(),
+                        builder: (context) => const PublishTournamentscreen(),
                       ),
                     );
                     break;
                 }
               },
-              child: Container(
-                height: 131,
-                width: 140,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
-                    'lib/images/g1.png',
-                    fit: BoxFit.contain,
-                  ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.asset(
+                  'lib/images/ludo.png',
+                  fit: BoxFit.contain,
                 ),
               ),
             ),
@@ -417,15 +494,22 @@ class _AppGamesScreenState extends State<AppGamesScreen>
         ),
         ...List.generate(
           8,
-          (index) => _buildHistoryItem(),
+          (index) => _buildHistoryItem(
+            // Pass the appropriate type based on the current selection
+            type: !isGamesSelected
+                ? (isLeagueSelected
+                    ? HistoryType.Leagues
+                    : HistoryType.Tournament)
+                : HistoryType.Games,
+          ),
         ),
       ],
     );
   }
 
-  Widget _buildHistoryItem() {
+  Widget _buildHistoryItem({required HistoryType type}) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 8),
+      margin: const EdgeInsets.only(bottom: 6),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
@@ -440,35 +524,62 @@ class _AppGamesScreenState extends State<AppGamesScreen>
             'lib/images/g1.png',
             width: 40,
             height: 40,
-            fit: BoxFit.cover,
+            fit: BoxFit.contain,
           ),
         ),
         title: const Text(
           'Monday, Sep 11, 2023',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontSize: 14),
         ),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             const Text(
               '8:30 AM',
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white, fontSize: 14),
             ),
             const SizedBox(width: 8),
             GestureDetector(
               onTap: () {
-                // Add navigation logic here
+                // Navigation logic based on type
+                switch (type) {
+                  case HistoryType.Games:
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LudoPopUpScreen(),
+                      ),
+                    );
+                    break;
+                  case HistoryType.Leagues:
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LeaguesScreenPopup(),
+                      ),
+                    );
+                    break;
+                  case HistoryType.Tournament:
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const TournamentScreenPopup(),
+                      ),
+                    );
+                    break;
+                }
               },
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: const [
                   Text(
                     'View',
-                    style: TextStyle(color: Colors.orange),
+                    style: TextStyle(color: Colors.orange, fontSize: 14),
                   ),
                   Icon(
                     Icons.remove_red_eye,
                     color: Colors.orange,
-                    size: 16,
+                    size: 15,
                   ),
                 ],
               ),
@@ -587,7 +698,7 @@ class _FlipCardState extends State<FlipCard>
                           height: 80,
                           width: 60,
                           'lib/images/g1.png',
-                          fit: BoxFit.fill,
+                          fit: BoxFit.contain,
                         ),
                       ),
                     )

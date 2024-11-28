@@ -301,15 +301,25 @@ class _EditableScheduledTournamentScreenState
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const Center(
-                      child: Text(
-                        'Your Tournament has\n  been  Scheduled',
-                        style: TextStyle(
-                          color: Colors.orange,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+                    Column(
+                      children: [
+                        Text(
+                          'Your Tournament has',
+                          style: TextStyle(
+                            color: Colors.orange,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
+                        Text(
+                          'been Scheduled',
+                          style: TextStyle(
+                            color: Colors.orange,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

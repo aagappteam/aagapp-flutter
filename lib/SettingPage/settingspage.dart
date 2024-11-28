@@ -45,230 +45,326 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar:
-          true, // Extends the background image behind the app bar
-      appBar: AppBar(
-        backgroundColor: Colors.transparent, // Makes the app bar transparent
-        elevation: 0, // Removes shadow
-        title: const Text(
-          'SETTINGS',
-          style: TextStyle(
-            color: Colors.white, // Sets title color to white for visibility
-          ),
-        ),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white, // Sets back arrow color to white
-          ),
-          onPressed: () {
-            Navigator.of(context).pop(); // Navigates back when pressed
-          },
-        ),
-      ),
+      extendBodyBehindAppBar: true,
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('lib/images/idkbg.jpg'),
             fit: BoxFit.cover,
           ),
         ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.05,
+        child: Column(
+          children: [
+            // Updated AppBar section
+            Padding(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).padding.top + 8,
+                left: 8,
+                right: 8,
+                bottom: 8,
               ),
-              Container(
-                padding: EdgeInsets.all(16),
-                margin: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  gradient: LinearGradient(
-                    colors: [
-                      Color.fromARGB(50, 113, 47, 160),
-                      Color.fromARGB(50, 54, 47, 145),
-                    ],
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.arrow_back, color: Colors.white),
+                    onPressed: () => Navigator.pop(context),
                   ),
-                ),
-                child: Column(
-                  children: [
-                    _buildSettingsItem(
-                      'Share AAG App',
-                      'lib/images/share_icon.png',
-                      () => _showSharePopup(context),
+                  const Text(
+                    'SETTINGS',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.025,
-                    ),
-                    _buildSettingsItem(
-                      'Change Language',
-                      'lib/images/language_icon.png',
-                      () => _showLanguagePopup(context),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.025,
-                    ),
-                    _buildSettingsItem(
-                      'Sound Manager',
-                      'lib/images/sound_icon.png',
-                      () => _showSoundPopup(context),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.025,
-                    ),
-                    _buildSettingsItem(
-                      'KYC Details',
-                      'lib/images/kyc_icon.png',
-                      () => _showKYCPopup(context),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.025,
-                    ),
-                    _buildSettingsItem(
-                      'Ticket History',
-                      'lib/images/ticket_icon.png',
-                      () {},
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.025,
-                    ),
-                    _buildSettingsItem(
-                      'Manage Permissions',
-                      'lib/images/permissions_icon.png',
-                      () => _showpermissionPopup(context),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.025,
-                    ),
-                    _buildSettingsItem(
-                      'Manage Social Media',
-                      'lib/images/social_icon.png',
-                      () => _showsocialPopup(context),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.025,
-                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.05,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.all(16),
+              margin: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                gradient: const LinearGradient(
+                  colors: [
+                    Color.fromARGB(50, 113, 47, 160),
+                    Color.fromARGB(50, 54, 47, 145),
                   ],
                 ),
               ),
-            ],
-          ),
+              child: Column(
+                children: [
+                  _buildSettingsItem(
+                    'Share AAG App',
+                    'lib/images/share_icon.png',
+                    () => _showSharePopup(context),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.025,
+                  ),
+                  _buildSettingsItem(
+                    'Change Language',
+                    'lib/images/language_icon.png',
+                    () => _showLanguagePopup(context),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.025,
+                  ),
+                  _buildSettingsItem(
+                    'Sound Manager',
+                    'lib/images/sound_icon.png',
+                    () => _showSoundPopup(context),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.025,
+                  ),
+                  _buildSettingsItem(
+                    'KYC Details',
+                    'lib/images/kyc_icon.png',
+                    () => _showKYCPopup(context),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.025,
+                  ),
+                  _buildSettingsItem(
+                    'Ticket History',
+                    'lib/images/ticket_icon.png',
+                    () {},
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.025,
+                  ),
+                  _buildSettingsItem(
+                    'Manage Permissions',
+                    'lib/images/permissions_icon.png',
+                    () => _showpermissionPopup(context),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.025,
+                  ),
+                  _buildSettingsItem(
+                    'Manage Social Media',
+                    'lib/images/social_icon.png',
+                    () => _showsocialPopup(context),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.025,
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 
+  Widget _buildSettingsItem(String title, String iconPath, VoidCallback onTap) {
+    return InkWell(
+      onTap: onTap,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Row(
+              children: [
+                Image.asset(iconPath, width: 24, height: 24),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+                Image.asset(
+                  'lib/images/r_arrow.png',
+                  width: 20,
+                  height: 20,
+                  color: const Color.fromRGBO(233, 116, 17, 1),
+                ),
+              ],
+            ),
+          ),
+          // Horizontal line
+          // Container(
+          //   height: 0.5,
+          //   color: const Color.fromARGB(255, 233, 116, 17),
+          // )
+        ],
+      ),
+    );
+  }
+
   void _showsocialPopup(BuildContext context) {
-    // Get screen size
     final screenSize = MediaQuery.of(context).size;
     final isSmallScreen = screenSize.width < 360;
 
-    showDialog(
+    showModalBottomSheet(
       context: context,
-      barrierDismissible: true,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      enableDrag: true,
       builder: (BuildContext context) {
-        return StatefulBuilder(builder: (context, setState) {
-          return Dialog(
-            backgroundColor: Colors.transparent,
-            // Make dialog size responsive
-            insetPadding: EdgeInsets.symmetric(
-              horizontal: screenSize.width * 0.05,
-              vertical: screenSize.height * 0.05,
-            ),
-            child: SingleChildScrollView(
-              // Add scrolling capability
-              child: Container(
-                width: screenSize.width * (isSmallScreen ? 0.95 : 0.9),
-                constraints: BoxConstraints(
-                  maxHeight: screenSize.height * 0.8, // Limit maximum height
-                ),
-                padding: EdgeInsets.all(isSmallScreen ? 12 : 20),
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [
-                      Color(0xFF35035A),
-                      Color(0xFF510985),
-                      Color(0xFF35035A),
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // Header
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Flexible(
-                          // Wrap with Flexible to prevent overflow
-                          child: Text(
-                            'MANAGE SOCIAL MEDIA',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: isSmallScreen ? 16 : 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        IconButton(
-                          icon: Icon(
-                            Icons.close,
-                            color: Colors.white,
-                            size: isSmallScreen ? 20 : 24,
-                          ),
-                          onPressed: () => Navigator.pop(context),
-                          constraints: BoxConstraints(
-                            minWidth: isSmallScreen ? 35 : 40,
-                            minHeight: isSmallScreen ? 35 : 40,
-                          ),
-                        ),
+        return Stack(
+          clipBehavior: Clip.none,
+          children: [
+            // Main Bottom Sheet
+            StatefulBuilder(
+              builder: (context, setState) {
+                return AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  height: MediaQuery.of(context).size.height *
+                      0.8, // Increased height for social media content
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [
+                        Color(0xFF35035A),
+                        Color(0xFF510985),
+                        Color(0xFF35035A),
                       ],
+                      stops: [0.1572, 0.5, 0.8753],
                     ),
-                    SizedBox(height: isSmallScreen ? 12 : 20),
-                    // Social Media List
-                    Flexible(
-                      child: SingleChildScrollView(
-                        // Make list scrollable
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            _buildSocialMediaRow(
-                                'Facebook',
-                                'lib/images/Facebook.png',
-                                setState,
-                                screenSize),
-                            _buildSocialMediaRow(
-                                'Instagram',
-                                'lib/images/Instagram.png',
-                                setState,
-                                screenSize),
-                            _buildSocialMediaRow(
-                                'Twitter',
-                                'lib/images/Elemento.png',
-                                setState,
-                                screenSize),
-                            _buildSocialMediaRow('YouTube',
-                                'lib/images/YouTube.png', setState, screenSize),
-                            _buildSocialMediaRow(
-                                'Snapchat',
-                                'lib/images/Snapchat.png',
-                                setState,
-                                screenSize),
-                          ],
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      // Header
+                      Container(
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                            colors: [
+                              Color(0xFF83410A),
+                              Color(0xFFE97411),
+                              Color(0xFF88440A),
+                            ],
+                          ),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            children: [
+                              // IconButton(
+                              //   icon: const Icon(Icons.arrow_back,
+                              //       color: Colors.white),
+                              //   onPressed: () => Navigator.pop(context),
+                              // ),
+                              const Text(
+                                'MANAGE SOCIAL MEDIA',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
+
+                      SizedBox(height: screenSize.height * 0.04),
+
+                      // Social Media List
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: isSmallScreen ? 12 : 16,
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                _buildSocialMediaRow(
+                                  'Facebook',
+                                  'lib/images/Facebook.png',
+                                  setState,
+                                  screenSize,
+                                ),
+                                _buildSocialMediaRow(
+                                  'Instagram',
+                                  'lib/images/Instagram.png',
+                                  setState,
+                                  screenSize,
+                                ),
+                                _buildSocialMediaRow(
+                                  'Twitter',
+                                  'lib/images/Elemento.png',
+                                  setState,
+                                  screenSize,
+                                ),
+                                _buildSocialMediaRow(
+                                  'YouTube',
+                                  'lib/images/YouTube.png',
+                                  setState,
+                                  screenSize,
+                                ),
+                                _buildSocialMediaRow(
+                                  'Snapchat',
+                                  'lib/images/Snapchat.png',
+                                  setState,
+                                  screenSize,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+
+            // Floating Close Button
+            Positioned(
+              top: -50,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: GestureDetector(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle, // Makes the container circular
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xFF712FA0),
+                          Color(0xFF362F91),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
                     ),
-                  ],
+                    child: const Icon(
+                      Icons.close_rounded,
+                      color: Colors.white,
+                      size: 24,
+                    ),
+                  ),
                 ),
               ),
             ),
-          );
-        });
+          ],
+        );
       },
     );
   }
@@ -281,7 +377,7 @@ class _SettingsPageState extends State<SettingsPage> {
       margin: EdgeInsets.only(bottom: isSmallScreen ? 8 : 10),
       padding: EdgeInsets.all(isSmallScreen ? 8 : 10),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.1),
+        color: Colors.white10,
         borderRadius: BorderRadius.circular(15),
       ),
       child: Column(
@@ -300,7 +396,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       height: isSmallScreen ? 60 : 80,
                       fit: BoxFit.contain,
                     ),
-                    SizedBox(width: isSmallScreen ? 8 : 12),
+                    SizedBox(width: isSmallScreen ? 5 : 10),
                     Flexible(
                       // Wrap with Flexible to prevent overflow
                       child: Text(
@@ -439,116 +535,284 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget _buildTextField(String hint, {bool enabled = true}) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 15),
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: const Color.fromRGBO(22, 13, 37, 1),
-        border: const Border(
-          bottom: BorderSide(
-            color: Color.fromARGB(255, 145, 30, 233),
-            width: 2.0,
-          ),
-        ),
-      ),
-      child: TextField(
-        enabled: enabled,
-        style: const TextStyle(color: Colors.white),
-        decoration: InputDecoration(
-          hintText: hint,
-          hintStyle: const TextStyle(color: Colors.white70),
-          border: InputBorder.none,
-        ),
-      ),
-    );
-  }
-
   void _showKYCPopup(BuildContext context) {
+    // Track if any text field is focused
+    bool isTextFieldFocused = false;
+
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
       enableDrag: true,
       builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              height: MediaQuery.of(context).size.height * 0.5,
-              decoration: const BoxDecoration(
-                color: Color(0xFF2D0F5C),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
+        return Stack(
+          clipBehavior: Clip.none,
+          children: [
+            // Main Bottom Sheet
+            StatefulBuilder(
+              builder: (context, setState) {
+                return AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  height: MediaQuery.of(context).size.height *
+                      (isTextFieldFocused ? 0.8 : 0.6),
+                  decoration: const BoxDecoration(
+                    color: Color(0xFF2D0F5C),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  child: DefaultTabController(
+                    length: 2,
+                    child: Column(
+                      children: [
+                        Container(
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.bottomCenter,
+                              end: Alignment.topCenter,
+                              colors: [
+                                Color(0xFF83410A),
+                                Color(0xFFE97411),
+                                Color(0xFF88440A),
+                              ],
+                            ),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Row(
+                              children: [
+                                // IconButton(
+                                //   icon: const Icon(Icons.arrow_back,
+                                //       color: Colors.white),
+                                //   onPressed: () => Navigator.pop(context),
+                                // ),
+                                const Text(
+                                  'KYC DETAILS',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const TabBar(
+                          tabs: [
+                            Tab(text: 'AADHAR CARD'),
+                            Tab(text: 'PAN CARD'),
+                          ],
+                          labelColor: Colors.white,
+                          unselectedLabelColor: Colors.grey,
+                          indicatorColor: Colors.orange,
+                        ),
+                        Expanded(
+                          child: TabBarView(
+                            children: [
+                              _buildAadharView(context, (focused) {
+                                setState(() => isTextFieldFocused = focused);
+                              }),
+                              _buildPanView(context, (focused) {
+                                setState(() => isTextFieldFocused = focused);
+                              }),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+
+            // Floating Close Button
+            Positioned(
+              top: -50,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: GestureDetector(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xFF712FA0),
+                          Color(0xFF362F91),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                    ),
+                    child: const Icon(
+                      Icons.close_rounded,
+                      color: Colors.white,
+                      size: 24,
+                    ),
+                  ),
                 ),
               ),
-              child: DefaultTabController(
-                length: 2,
-                child: Column(
-                  children: [
-                    Container(
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                          colors: [
-                            Color(0xFF83410A),
-                            Color(0xFFE97411),
-                            Color(0xFF88440A),
-                          ],
-                        ),
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20),
-                        ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildTextField(String hint, Function(bool) onFocusChanged) {
+    return Focus(
+      onFocusChange: onFocusChanged,
+      child: TextField(
+        decoration: InputDecoration(
+          hintText: hint,
+          hintStyle: TextStyle(color: Colors.grey),
+          filled: true,
+          fillColor: Colors.white.withOpacity(0.1),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none,
+          ),
+        ),
+        style: TextStyle(color: Colors.white),
+      ),
+    );
+  }
+
+  Widget _buildAadharView(BuildContext context, Function(bool) onFocusChanged) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: [
+          _buildTextField('Enter your 12 digit Aadhar number', onFocusChanged),
+          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 32.0),
+            child: Column(
+              children: [
+                ElevatedButton(
+                  onPressed: () => _showOTPVerification(context),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(double.infinity, 50),
+                    backgroundColor: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    padding: EdgeInsets.zero,
+                  ).copyWith(
+                    backgroundColor:
+                        WidgetStateProperty.all(Colors.transparent),
+                  ),
+                  child: Ink(
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [Color(0xFF712FA0), Color(0xFF362F91)],
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Row(
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.arrow_back,
-                                  color: Colors.white),
-                              onPressed: () => Navigator.pop(context),
-                            ),
-                            const Text(
-                              'KYC DETAILS',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Container(
+                      height: 50,
+                      alignment: Alignment.center,
+                      child: const Text(
+                        'SEND OTP',
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
-                    const TabBar(
-                      tabs: [
-                        Tab(text: 'AADHAR CARD'),
-                        Tab(text: 'PAN CARD'),
-                      ],
-                      labelColor: Colors.white,
-                      unselectedLabelColor: Colors.grey,
-                      indicatorColor: Colors.orange,
-                    ),
-                    Expanded(
-                      child: TabBarView(
-                        children: [
-                          _buildAadharView(context),
-                          _buildPanView(context),
-                        ],
-                      ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.warning_amber_rounded,
+                        color: Colors.orange, size: 20),
+                    SizedBox(width: 8),
+                    Text(
+                      'Providing fake documents may lead to permanent\naccount blocking',
+                      style: TextStyle(color: Colors.grey, fontSize: 12),
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPanView(BuildContext context, Function(bool) onFocusChanged) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: [
+          _buildTextField('Enter your PAN Number', onFocusChanged),
+          const SizedBox(height: 16),
+          _buildTextField('DD/MM/YYYY', onFocusChanged),
+          Spacer(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Icon(Icons.warning_amber_rounded, color: Colors.orange, size: 20),
+              SizedBox(width: 8),
+              Text(
+                'Providing fake documents may lead to permanent\naccount blocking',
+                style: TextStyle(color: Colors.grey, fontSize: 12),
+                textAlign: TextAlign.center,
               ),
-            );
-          },
-        );
-      },
+            ],
+          ),
+          Spacer(),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Loadscreen()),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size(double.infinity, 50),
+              backgroundColor: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              padding: EdgeInsets.zero,
+            ).copyWith(
+              backgroundColor: WidgetStateProperty.all(Colors.transparent),
+            ),
+            child: Ink(
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Color(0xFF712FA0), Color(0xFF362F91)],
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Container(
+                height: 50,
+                alignment: Alignment.center,
+                child: const Text(
+                  'PROCEED',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -671,174 +935,6 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget _buildAadharView(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          _buildTextField('Enter your 12 digit Aadhar number'),
-          const Spacer(),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 32.0),
-            child: Column(
-              children: [
-                ElevatedButton(
-                  onPressed: () => _showOTPVerification(context),
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 50),
-                    backgroundColor: Colors.transparent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    padding: EdgeInsets.zero,
-                  ).copyWith(
-                    backgroundColor:
-                        WidgetStateProperty.all(Colors.transparent),
-                  ),
-                  child: Ink(
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [Color(0xFF712FA0), Color(0xFF362F91)],
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Container(
-                      height: 50,
-                      alignment: Alignment.center,
-                      child: const Text(
-                        'SEND OTP',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(Icons.warning_amber_rounded,
-                        color: Colors.orange, size: 20),
-                    SizedBox(width: 8),
-                    Text(
-                      'Providing fake documents may lead to permanent\naccount blocking',
-                      style: TextStyle(color: Colors.grey, fontSize: 12),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildPanView(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          _buildTextField('Enter your PAN Number'),
-          const SizedBox(height: 16),
-          _buildTextField('DD/MM/YYYY'),
-          Spacer(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Icon(Icons.warning_amber_rounded, color: Colors.orange, size: 20),
-              SizedBox(width: 8),
-              Text(
-                'Providing fake documents may lead to permanent\naccount blocking',
-                style: TextStyle(color: Colors.grey, fontSize: 12),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-          Spacer(),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Loadscreen()),
-              );
-            },
-            style: ElevatedButton.styleFrom(
-              minimumSize: const Size(double.infinity, 50),
-              backgroundColor: Colors.transparent,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              padding: EdgeInsets.zero,
-            ).copyWith(
-              backgroundColor: WidgetStateProperty.all(Colors.transparent),
-            ),
-            child: Ink(
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Color(0xFF712FA0), Color(0xFF362F91)],
-                ),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Container(
-                height: 50,
-                alignment: Alignment.center,
-                child: const Text(
-                  'PROCEED',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSettingsItem(String title, String iconPath, VoidCallback onTap) {
-    return InkWell(
-      onTap: onTap,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            child: Row(
-              children: [
-                Image.asset(iconPath, width: 24, height: 24),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Text(
-                    title,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-                Image.asset(
-                  'lib/images/r_arrow.png',
-                  width: 20,
-                  height: 20,
-                  color: const Color.fromRGBO(233, 116, 17, 1),
-                ),
-              ],
-            ),
-          ),
-          // Horizontal line
-          Container(
-            height: 0.5,
-            color: const Color.fromARGB(255, 233, 116, 17),
-          )
-        ],
-      ),
-    );
-  }
-
   void _showSharePopup(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final isSmallScreen = screenSize.width < 360;
@@ -872,7 +968,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   _buildShareOption(
-                    icon: 'assets/whatsapp_icon.png',
+                    icon: 'lib/images/whatsapp_icon.png',
                     label: 'WhatsApp',
                     onTap: () {
                       // Add WhatsApp sharing logic
@@ -880,7 +976,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     },
                   ),
                   _buildShareOption(
-                    icon: 'assets/notion_icon.png',
+                    icon: 'lib/images/notion_icon.png',
                     label: 'Notion',
                     onTap: () {
                       // Add Notion sharing logic
@@ -888,7 +984,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     },
                   ),
                   _buildShareOption(
-                    icon: 'assets/facebook_icon.png',
+                    icon: 'lib/images/facebook_icon.png',
                     label: 'Facebook',
                     onTap: () {
                       // Add Facebook sharing logic
@@ -896,7 +992,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     },
                   ),
                   _buildShareOption(
-                    icon: 'assets/more_icon.png',
+                    icon: 'lib/images/more_icon.png',
                     label: 'More',
                     onTap: () {
                       // Show more sharing options
@@ -1051,121 +1147,162 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void _showLanguagePopup(BuildContext context) {
-    // Get screen size
     final screenSize = MediaQuery.of(context).size;
     final isSmallScreen = screenSize.width < 360;
 
-    showDialog(
+    showModalBottomSheet(
       context: context,
-      builder: (context) => FadeTransition(
-        opacity: AlwaysStoppedAnimation(1.0),
-        child: Dialog(
-          backgroundColor: Colors.transparent,
-          // Make dialog size responsive
-          insetPadding: EdgeInsets.symmetric(
-            horizontal: screenSize.width * 0.05,
-            vertical: screenSize.height * 0.05,
-          ),
-          child: SingleChildScrollView(
-            // Add scrolling capability
-            child: Container(
-              width: screenSize.width * (isSmallScreen ? 0.95 : 0.9),
-              constraints: BoxConstraints(
-                maxHeight: screenSize.height * 0.6, // Adjust maximum height
-                minHeight: screenSize.height * 0.3,
-              ),
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [
-                    Color(0xFF35035A),
-                    Color(0xFF510985),
-                    Color(0xFF35035A),
-                  ],
-                  stops: [0.1572, 0.5, 0.8753],
-                ),
-                border: Border.all(
-                  color: const Color.fromRGBO(233, 116, 17, 1),
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(isSmallScreen ? 12 : 16),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // Header
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Spacer(),
-                        Text(
-                          'LANGUAGE',
-                          style: TextStyle(
-                            fontSize: isSmallScreen ? 20 : 24,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Spacer(),
-                        GestureDetector(
-                          onTap: () => Navigator.of(context).pop(),
-                          child: Container(
-                            padding: EdgeInsets.all(isSmallScreen ? 4 : 8),
-                            child: Icon(
-                              Icons.close_rounded,
-                              color: Colors.white,
-                              size: isSmallScreen ? 18 : 20,
-                            ),
-                          ),
-                        ),
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      enableDrag: true,
+      builder: (BuildContext context) {
+        return Stack(
+          clipBehavior: Clip.none,
+          children: [
+            // Main Bottom Sheet
+            StatefulBuilder(
+              builder: (context, setState) {
+                return AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  height: MediaQuery.of(context).size.height * 0.42,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [
+                        Color(0xFF35035A),
+                        Color(0xFF510985),
+                        Color(0xFF35035A),
                       ],
+                      stops: [0.1572, 0.5, 0.8753],
                     ),
-                    SizedBox(
-                      height: screenSize.height * 0.04,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
                     ),
-                    // Language Buttons
-                    Flexible(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            _buildLanguageButton(
-                              'Continue in English',
-                              screenSize,
-                              isSmallScreen,
-                            ),
-                            SizedBox(height: isSmallScreen ? 12 : 16),
-                            _buildLanguageButton(
-                              'Continue in Hindi',
-                              screenSize,
-                              isSmallScreen,
-                            ),
-                            SizedBox(height: isSmallScreen ? 12 : 16),
-                            _buildLanguageButton(
-                              'Continue in Malayalam',
-                              screenSize,
-                              isSmallScreen,
-                            ),
-                            SizedBox(height: isSmallScreen ? 12 : 16),
-                            _buildLanguageButton(
-                              'Continue in Kannada',
-                              screenSize,
-                              isSmallScreen,
-                            ),
-                          ],
+                  ),
+                  child: Column(
+                    children: [
+                      // Header with gradient
+                      Container(
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                            colors: [
+                              Color(0xFF83410A),
+                              Color(0xFFE97411),
+                              Color(0xFF88440A),
+                            ],
+                          ),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            children: [
+                              // IconButton(
+                              //   icon: const Icon(Icons.arrow_back,
+                              //       color: Colors.white),
+                              //   onPressed: () => Navigator.pop(context),
+                              // ),
+                              const Text(
+                                'LANGUAGE',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
+
+                      SizedBox(height: screenSize.height * 0.04),
+
+                      // Language Buttons
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: isSmallScreen ? 12 : 16,
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SizedBox(height: isSmallScreen ? 20 : 30),
+                                _buildLanguageButton(
+                                  'Continue in English',
+                                  screenSize,
+                                  isSmallScreen,
+                                ),
+                                SizedBox(height: isSmallScreen ? 20 : 30),
+                                _buildLanguageButton(
+                                  'Continue in Hindi',
+                                  screenSize,
+                                  isSmallScreen,
+                                ),
+                                SizedBox(height: isSmallScreen ? 12 : 16),
+                                // _buildLanguageButton(
+                                //   'Continue in Malayalam',
+                                //   screenSize,
+                                //   isSmallScreen,
+                                // ),
+                                // SizedBox(height: isSmallScreen ? 12 : 16),
+                                // _buildLanguageButton(
+                                //   'Continue in Kannada',
+                                //   screenSize,
+                                //   isSmallScreen,
+                                // ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+
+            // Floating Close Button
+            Positioned(
+              top: -50, // Position above the bottom sheet
+              left: 0,
+              right: 0,
+              child: Center(
+                child: GestureDetector(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle, // Makes the container circular
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xFF712FA0),
+                          Color(0xFF362F91),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
                     ),
-                  ],
+                    child: const Icon(
+                      Icons.close_rounded,
+                      color: Colors.white,
+                      size: 24,
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-        ),
-      ),
+          ],
+        );
+      },
     );
   }
 
@@ -1218,130 +1355,224 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void _showSoundPopup(BuildContext context) {
-    showDialog(
+    showModalBottomSheet(
       context: context,
-      builder: (context) => StatefulBuilder(
-        builder: (context, setState) => Dialog(
-          backgroundColor: Colors.transparent,
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.9,
-            height: MediaQuery.of(context).size.width * 0.5,
-            padding: EdgeInsets.all(5),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  Color(0xFF35035A),
-                  Color(0xFF510985),
-                  Color(0xFF35035A),
-                ],
-                stops: [0.1572, 0.5, 0.8753],
-              ),
-              border: Border.all(
-                color: Color.fromRGBO(233, 116, 17, 1),
-                width: 1,
-              ),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      'SOUND MANAGER',
-                      style: TextStyle(
-                          fontSize: 24,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.079,
-                    ),
-                    GestureDetector(
-                      onTap: () => Navigator.of(context).pop(),
-                      child: Icon(
-                        Icons.close_rounded,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.width * 0.085,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'lib/images/sound.png',
-                          height: 80,
-                          width: 40,
-                        ),
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      enableDrag: true,
+      builder: (BuildContext context) {
+        return Stack(
+          clipBehavior: Clip.none,
+          children: [
+            // Main Bottom Sheet
+            StatefulBuilder(
+              builder: (context, setState) {
+                return AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  height: MediaQuery.of(context).size.height *
+                      0.3, // Reduced height since content is smaller
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [
+                        Color(0xFF35035A),
+                        Color(0xFF510985),
+                        Color(0xFF35035A),
                       ],
+                      stops: [0.1572, 0.5, 0.8753],
                     ),
-                    Column(
-                      children: [
-                        // Row(
-                        //   children: [
-                        //     Text(
-                        //       'System',
-                        //       style: TextStyle(
-                        //         color: Color.fromRGBO(233, 116, 17, 1),
-                        //         fontSize: 16,
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        Row(
-                          children: [
-                            Text(
-                              'Permission required to play\nsounds during system interactions\nlike clicks',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 10,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      // Header with gradient
+                      Container(
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                            colors: [
+                              Color(0xFF83410A),
+                              Color(0xFFE97411),
+                              Color(0xFF88440A),
+                            ],
+                          ),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            children: [
+                              // IconButton(
+                              //   icon: const Icon(Icons.arrow_back,
+                              //       color: Colors.white),
+                              //   onPressed: () => Navigator.pop(context),
+                              // ),
+                              const Text(
+                                'SOUND MANAGER',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
+                            ],
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(height: 24),
+
+                      // Sound Controls
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'lib/images/sound.png',
+                                  height: 80,
+                                  width: 40,
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Row(
+                                  children: const [
+                                    Text(
+                                      'Permission required to play\nsounds during system interactions\nlike clicks',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Switch(
+                                  value: isSoundEnabled,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      isSoundEnabled = value;
+                                    });
+                                  },
+                                  activeColor: Colors.green,
+                                  inactiveTrackColor:
+                                      Colors.red.withOpacity(0.5),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Switch(
-                          value: isSoundEnabled,
-                          onChanged: (value) {
-                            setState(() {
-                              isSoundEnabled = value;
-                            });
-                          },
-                          activeColor: Colors.green,
-                          inactiveTrackColor: Colors.red.withOpacity(0.5),
-                        ),
-                      ],
-                    ),
-                  ],
-                )
-              ],
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
-          ),
-        ),
-      ),
+
+            // Floating Close Button
+            Positioned(
+              top: -50, // Position above the bottom sheet
+              left: 0,
+              right: 0,
+              child: Center(
+                child: GestureDetector(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle, // Makes the container circular
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xFF712FA0),
+                          Color(0xFF362F91),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                    ),
+                    child: const Icon(
+                      Icons.close_rounded,
+                      color: Colors.white,
+                      size: 24,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
   void _showpermissionPopup(BuildContext context) {
-    showDialog(
+    showModalBottomSheet(
       context: context,
-      builder: (context) => Dialog(
-        backgroundColor: Colors.transparent,
-        child: PermissionPopup(),
-      ),
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      enableDrag: true,
+      builder: (BuildContext context) {
+        return Stack(
+          clipBehavior: Clip.none,
+          children: [
+            // Main Bottom Sheet
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              height: MediaQuery.of(context).size.height * 0.8,
+              child: PermissionPopup(),
+            ),
+
+            // Floating Close Button
+            Positioned(
+              top: -50, // Position above the bottom sheet
+              left: 0,
+              right: 0,
+              child: Center(
+                child: GestureDetector(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle, // Makes the container circular
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xFF712FA0),
+                          Color(0xFF362F91),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                    ),
+                    child: const Icon(
+                      Icons.close_rounded,
+                      color: Colors.white,
+                      size: 24,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
@@ -1369,9 +1600,9 @@ class _PermissionPopupState extends State<PermissionPopup> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.9,
+      width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
           colors: [
@@ -1381,7 +1612,10 @@ class _PermissionPopupState extends State<PermissionPopup> {
           ],
           stops: [0.1572, 0.5, 0.8753],
         ),
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
       ),
       child: SingleChildScrollView(
         child: Column(
@@ -1389,7 +1623,7 @@ class _PermissionPopupState extends State<PermissionPopup> {
           children: [
             // Title Section
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
@@ -1400,13 +1634,19 @@ class _PermissionPopupState extends State<PermissionPopup> {
                   ],
                   stops: [0.071, 0.491, 0.951],
                 ),
-                borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
               ),
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(
+                  // IconButton(
+                  //   icon: const Icon(Icons.arrow_back, color: Colors.white),
+                  //   onPressed: () => Navigator.pop(context),
+                  // ),
+                  const Text(
                     'MANAGE PERMISSIONS',
                     style: TextStyle(
                       color: Colors.white,
@@ -1414,20 +1654,12 @@ class _PermissionPopupState extends State<PermissionPopup> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(width: MediaQuery.of(context).size.width * 0.08),
-                  GestureDetector(
-                    onTap: () => Navigator.of(context).pop(),
-                    child: Icon(
-                      Icons.close_rounded,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                  ),
                 ],
               ),
             ),
+
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Text(
                 'Permission required to send transactional and promotional communication',
                 style: TextStyle(
@@ -1441,7 +1673,7 @@ class _PermissionPopupState extends State<PermissionPopup> {
 
             // Communication Permissions
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
                 color: const Color.fromRGBO(255, 255, 255, 0.052),
                 borderRadius: BorderRadius.circular(10),
@@ -1454,7 +1686,7 @@ class _PermissionPopupState extends State<PermissionPopup> {
                     whatsappEnabled,
                     (value) => setState(() => whatsappEnabled = value),
                   ),
-                  Divider(color: Colors.white24, height: 1),
+                  const Divider(color: Colors.white24, height: 1),
                   _buildCommunicationItem(
                     'SMS',
                     'lib/images/sms.png',
@@ -1467,7 +1699,7 @@ class _PermissionPopupState extends State<PermissionPopup> {
 
             // System Permissions Section
             Padding(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -1480,8 +1712,8 @@ class _PermissionPopupState extends State<PermissionPopup> {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  SizedBox(height: 4),
-                  Text(
+                  const SizedBox(height: 4),
+                  const Text(
                     'System permissions required for critical app features to function properly',
                     style: TextStyle(
                       fontSize: 12,
@@ -1494,7 +1726,7 @@ class _PermissionPopupState extends State<PermissionPopup> {
 
             // System Permission Items
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
                 color: Colors.white10,
                 borderRadius: BorderRadius.circular(10),
@@ -1517,7 +1749,7 @@ class _PermissionPopupState extends State<PermissionPopup> {
                 ],
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
           ],
         ),
       ),
@@ -1531,15 +1763,15 @@ class _PermissionPopupState extends State<PermissionPopup> {
     Function(bool) onChanged,
   ) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         children: [
           Image.asset(iconPath, width: 24, height: 24),
-          SizedBox(width: 12),
+          const SizedBox(width: 12),
           Expanded(
             child: Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 14,
               ),
@@ -1562,23 +1794,23 @@ class _PermissionPopupState extends State<PermissionPopup> {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: Row(
             children: [
               Image.asset(iconPath, width: 24, height: 24),
-              SizedBox(width: 12),
+              const SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 14,
                       ),
                     ),
-                    Text(
+                    const Text(
                       'To enable relevant features',
                       style: TextStyle(
                         color: Colors.white70,
@@ -1595,22 +1827,22 @@ class _PermissionPopupState extends State<PermissionPopup> {
                   });
                 },
                 style: ButtonStyle(
-                  minimumSize: WidgetStateProperty.all(Size(80, 36)),
+                  minimumSize: WidgetStateProperty.all(const Size(80, 36)),
                   backgroundColor: WidgetStateProperty.all(
                     isAllowed
-                        ? Color.fromARGB(255, 55, 20, 80)
-                        : Color.fromARGB(149, 148, 54, 215),
+                        ? const Color.fromARGB(255, 55, 20, 80)
+                        : const Color.fromARGB(149, 148, 54, 215),
                   ),
                   shape: WidgetStateProperty.all(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(4),
-                      side: BorderSide(color: Colors.white),
+                      side: const BorderSide(color: Colors.white),
                     ),
                   ),
                 ),
                 child: Text(
                   isAllowed ? 'ALLOWED' : 'ALLOW',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
@@ -1620,7 +1852,8 @@ class _PermissionPopupState extends State<PermissionPopup> {
             ],
           ),
         ),
-        if (title != 'Microphone') Divider(color: Colors.white24, height: 1),
+        if (title != 'Microphone')
+          const Divider(color: Colors.white24, height: 1),
       ],
     );
   }

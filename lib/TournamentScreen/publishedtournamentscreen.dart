@@ -85,14 +85,22 @@ class _TournamentPublishedScreenState extends State<TournamentPublishedScreen>
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const Text(
-                      'Your Tournament has \n  been Published',
-                      style: TextStyle(
-                        color: Colors.orange,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
+                    const Column(children: [
+                      Text('Your Tournament has',
+                          style: TextStyle(
+                            color: Colors.orange,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          )),
+                      Text(
+                        'been Published',
+                        style: TextStyle(
+                          color: Colors.orange,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
+                    ]),
                   ],
                 ),
               ),

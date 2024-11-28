@@ -262,9 +262,9 @@ class _CustomCardState extends State<CustomCard> with TickerProviderStateMixin {
               widget.name,
               style: const TextStyle(
                 color: Colors.white,
-                fontSize: 36,
+                fontSize: 24,
                 fontWeight: FontWeight.w600,
-                letterSpacing: 1,
+                letterSpacing: 1.5,
               ),
             ),
             _buildCustomButton(),

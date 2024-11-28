@@ -7,6 +7,7 @@ class NotificationData {
   final String? amount;
   final bool? isCredit;
   final String date;
+  final String desc;
 
   NotificationData({
     required this.imagePath,
@@ -15,6 +16,7 @@ class NotificationData {
     this.amount,
     this.isCredit,
     required this.date,
+    required this.desc,
   });
 }
 
@@ -53,128 +55,6 @@ class _NotificationScreenState extends State<NotificationScreen>
     super.dispose();
   }
 
-  List<NotificationData> get allNotifications {
-    return [
-      // October 29 Notifications
-      NotificationData(
-        imagePath: 'lib/images/credit.png',
-        name: 'Sumit Singh',
-        time: '09:45 Pm',
-        amount: '+₹50.00 Cr',
-        isCredit: true,
-        date: 'October 29, 2024',
-      ),
-      NotificationData(
-        imagePath: 'lib/images/publishgame.png',
-        name: 'Publish Game',
-        time: '09:45 Pm',
-        date: 'October 29, 2024',
-      ),
-      NotificationData(
-        imagePath: 'lib/images/debit.png',
-        name: 'Sumit Singh',
-        time: '09:45 Pm',
-        amount: '-₹50.00 Cr',
-        isCredit: false,
-        date: 'October 29, 2024',
-      ),
-      NotificationData(
-        imagePath: 'lib/images/scheduled.png',
-        name: 'Scheduled Game',
-        time: '08:00 Pm',
-        date: 'October 29, 2024',
-      ),
-      NotificationData(
-        imagePath: 'lib/images/challenge.png',
-        name: 'Challenging the opponent',
-        time: '07:10 Pm',
-        date: 'October 29, 2024',
-      ),
-      NotificationData(
-        imagePath: 'lib/images/debit.png',
-        name: 'Sumit Singh',
-        time: '06:30 Pm',
-        amount: '-₹50.00 Cr',
-        isCredit: false,
-        date: 'October 29, 2024',
-      ),
-      NotificationData(
-        imagePath: 'lib/images/credit.png',
-        name: 'Sumit Singh',
-        time: '06:15 Pm',
-        amount: '+₹50.00 Cr',
-        isCredit: true,
-        date: 'October 29, 2024',
-      ),
-      NotificationData(
-        imagePath: 'lib/images/approval.png',
-        name: 'Approved Request',
-        time: '05:05 Pm',
-        date: 'October 29, 2024',
-      ),
-      NotificationData(
-        imagePath: 'lib/images/pending.png',
-        name: 'Pending Request',
-        time: '05:00 Pm',
-        date: 'October 29, 2024',
-      ),
-
-      // October 28 Notifications
-      NotificationData(
-        imagePath: 'lib/images/credit.png',
-        name: 'Sumit Singh',
-        time: '09:45 Pm',
-        amount: '+₹50.00 Cr',
-        isCredit: true,
-        date: 'October 28, 2024',
-      ),
-      NotificationData(
-        imagePath: 'lib/images/publishgame.png',
-        name: 'Publish Game',
-        time: '09:00 Pm',
-        date: 'October 28, 2024',
-      ),
-      NotificationData(
-        imagePath: 'lib/images/debit.png',
-        name: 'Sumit Singh',
-        time: '08:30 Pm',
-        amount: '-₹50.00 Cr',
-        isCredit: false,
-        date: 'October 28, 2024',
-      ),
-      NotificationData(
-        imagePath: 'lib/images/scheduled.png',
-        name: 'Scheduled Game',
-        time: '08:00 Pm',
-        date: 'October 28, 2024',
-      ),
-      NotificationData(
-        imagePath: 'lib/images/challenge.png',
-        name: 'Challenging the opponent',
-        time: '07:10 Pm',
-        date: 'October 28, 2024',
-      ),
-      NotificationData(
-        imagePath: 'lib/images/approval.png',
-        name: 'Approved Request',
-        time: '05:05 Pm',
-        date: 'October 28, 2024',
-      ),
-    ];
-  }
-
-  List<NotificationData> get transactionNotifications {
-    return allNotifications
-        .where((notification) => notification.amount != null)
-        .toList();
-  }
-
-  List<NotificationData> get activityNotifications {
-    return allNotifications
-        .where((notification) => notification.amount == null)
-        .toList();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -189,7 +69,7 @@ class _NotificationScreenState extends State<NotificationScreen>
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverAppBar(
-                expandedHeight: MediaQuery.of(context).size.height * 0.15,
+                expandedHeight: MediaQuery.of(context).size.height * 0.05,
                 floating: true,
                 pinned: false,
                 snap: false,
@@ -214,7 +94,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                         unselectedLabelColor: Colors.white,
                         onTap: (index) {
                           setState(() {
-                            _tabController.animateTo(index);
+                            _tabController.index = index; // Activate tapped tab
                           });
                         },
                         tabs:
@@ -269,6 +149,7 @@ class _NotificationScreenState extends State<NotificationScreen>
               return _buildNotificationItem(
                 imagePath: notification.imagePath,
                 name: notification.name,
+                desc: notification.desc,
                 time: notification.time,
                 amount: notification.amount,
                 isCredit: notification.isCredit,
@@ -301,6 +182,7 @@ class _NotificationScreenState extends State<NotificationScreen>
     required String imagePath,
     required String name,
     required String time,
+    required String desc,
     String? amount,
     bool? isCredit,
   }) {
@@ -353,20 +235,155 @@ class _NotificationScreenState extends State<NotificationScreen>
                     fontSize: MediaQuery.of(context).size.width * 0.035,
                   ),
                 ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.005),
+                Text(
+                  desc,
+                  style: TextStyle(
+                    color: Colors.grey[400],
+                    fontSize: MediaQuery.of(context).size.width * 0.035,
+                  ),
+                ),
               ],
             ),
           ),
           if (amount != null)
-            Text(
-              amount,
-              style: TextStyle(
-                color: isCredit! ? Colors.green : Colors.red,
-                fontSize: MediaQuery.of(context).size.width * 0.04,
-                fontWeight: FontWeight.bold,
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  amount,
+                  style: TextStyle(
+                    color: isCredit! ? Colors.green : Colors.red,
+                    fontSize: MediaQuery.of(context).size.width * 0.04,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
         ],
       ),
     );
+  }
+
+  List<NotificationData> get allNotifications {
+    return [
+      // October 29 Notifications
+      NotificationData(
+          imagePath: 'lib/images/credit.png',
+          name: 'Sumit Singh',
+          time: '09:45 Pm',
+          amount: '+₹50.00 Cr',
+          isCredit: true,
+          date: 'October 29, 2024',
+          desc: 'Ludo has been published for four hours'),
+      NotificationData(
+          imagePath: 'lib/images/publishgame.png',
+          name: 'Publish Game',
+          time: '09:45 Pm',
+          date: 'October 29, 2024',
+          desc: 'Ludo has been published for four hours'),
+      NotificationData(
+          imagePath: 'lib/images/debit.png',
+          name: 'Sumit Singh',
+          time: '09:45 Pm',
+          amount: '-₹50.00 Cr',
+          isCredit: false,
+          date: 'October 29, 2024',
+          desc: 'Ludo has been published for four hours'),
+      NotificationData(
+          imagePath: 'lib/images/scheduled.png',
+          name: 'Scheduled Game',
+          time: '08:00 Pm',
+          date: 'October 29, 2024',
+          desc: 'Ludo has been published for four hours'),
+      NotificationData(
+          imagePath: 'lib/images/challenge.png',
+          name: 'Challenging the opponent',
+          time: '07:10 Pm',
+          date: 'October 29, 2024',
+          desc: 'Ludo has been published for four hours'),
+      NotificationData(
+          imagePath: 'lib/images/debit.png',
+          name: 'Sumit Singh',
+          time: '06:30 Pm',
+          amount: '-₹50.00 Cr',
+          isCredit: false,
+          date: 'October 29, 2024',
+          desc: 'Ludo has been published for four hours'),
+      NotificationData(
+          imagePath: 'lib/images/credit.png',
+          name: 'Sumit Singh',
+          time: '06:15 Pm',
+          amount: '+₹50.00 Cr',
+          isCredit: true,
+          date: 'October 29, 2024',
+          desc: 'Ludo has been published for four hours'),
+      NotificationData(
+          imagePath: 'lib/images/approval.png',
+          name: 'Approved Request',
+          time: '05:05 Pm',
+          date: 'October 29, 2024',
+          desc: 'Ludo has been published for four hours'),
+      NotificationData(
+          imagePath: 'lib/images/pending.png',
+          name: 'Pending Request',
+          time: '05:00 Pm',
+          date: 'October 29, 2024',
+          desc: 'Ludo has been published for four hours'),
+
+      // October 28 Notifications
+      NotificationData(
+          imagePath: 'lib/images/credit.png',
+          name: 'Sumit Singh',
+          time: '09:45 Pm',
+          amount: '+₹50.00 Cr',
+          isCredit: true,
+          date: 'October 28, 2024',
+          desc: 'Ludo has been published for four hours'),
+      NotificationData(
+          imagePath: 'lib/images/publishgame.png',
+          name: 'Publish Game',
+          time: '09:00 Pm',
+          date: 'October 28, 2024',
+          desc: 'Ludo has been published for four hours'),
+      NotificationData(
+          imagePath: 'lib/images/debit.png',
+          name: 'Sumit Singh',
+          time: '08:30 Pm',
+          amount: '-₹50.00 Cr',
+          isCredit: false,
+          date: 'October 28, 2024',
+          desc: 'Ludo has been published for four hours'),
+      NotificationData(
+          imagePath: 'lib/images/scheduled.png',
+          name: 'Scheduled Game',
+          time: '08:00 Pm',
+          date: 'October 28, 2024',
+          desc: 'Ludo has been published for four hours'),
+      NotificationData(
+          imagePath: 'lib/images/challenge.png',
+          name: 'Challenging the opponent',
+          time: '07:10 Pm',
+          date: 'October 28, 2024',
+          desc: 'Ludo has been published for four hours'),
+      NotificationData(
+          imagePath: 'lib/images/approval.png',
+          name: 'Approved Request',
+          time: '05:05 Pm',
+          date: 'October 28, 2024',
+          desc: 'Ludo has been published for four hours'),
+    ];
+  }
+
+  List<NotificationData> get transactionNotifications {
+    return allNotifications
+        .where((notification) => notification.amount != null)
+        .toList();
+  }
+
+  List<NotificationData> get activityNotifications {
+    return allNotifications
+        .where((notification) => notification.amount == null)
+        .toList();
   }
 }

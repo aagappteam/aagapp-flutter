@@ -10,14 +10,14 @@ import 'package:AAG/tobeadded/gradient_button.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
-class LeagueScreen extends StatefulWidget {
-  const LeagueScreen({super.key});
+class PublishLeagueScreen extends StatefulWidget {
+  const PublishLeagueScreen({super.key});
 
   @override
-  LeagueScreenState createState() => LeagueScreenState();
+  PublishLeagueScreenState createState() => PublishLeagueScreenState();
 }
 
-class LeagueScreenState extends State<LeagueScreen>
+class PublishLeagueScreenState extends State<PublishLeagueScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
   int selectedThemeIndex = -1;
@@ -31,20 +31,28 @@ class LeagueScreenState extends State<LeagueScreen>
   late Animation<double> _scaleAnimation;
   late Animation<Color?> _colorAnimation1;
   late Animation<Color?> _colorAnimation2;
-
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    // Initialize tab controller with same length as Ludo screen
+    _tabController = TabController(length: 2, vsync: this)
+      ..addListener(() {
+        setState(() {}); // Rebuild on tab change
+      });
 
     _gradientAnimationController = AnimationController(
       duration: const Duration(seconds: 3),
       vsync: this,
     )..repeat();
 
+    // Setup animations with same configurations
+    _setupAnimations();
+  }
+
+  void _setupAnimations() {
     _gradientAnimation = Tween<double>(
       begin: 0.0,
-      end: 2 * 3.14159, // Full rotation in radians
+      end: 2 * 3.14159,
     ).animate(CurvedAnimation(
       parent: _gradientAnimationController,
       curve: Curves.easeInOutCubic,
@@ -94,18 +102,6 @@ class LeagueScreenState extends State<LeagueScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text(
-          'LEAGUES',
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -115,16 +111,37 @@ class LeagueScreenState extends State<LeagueScreen>
         ),
         child: Column(
           children: [
-            const SizedBox(height: 90),
+            // Custom AppBar section
+            Padding(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).padding.top + 8,
+                left: 8,
+                right: 8,
+                bottom: 8,
+              ),
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.arrow_back, color: Colors.white),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  const Text(
+                    'LEAGUES',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
             TabBar(
               controller: _tabController,
               indicatorColor: Colors.orange,
               indicatorWeight: 3,
               labelColor: Colors.orange,
               unselectedLabelColor: Colors.white,
-              onTap: (_) {
-                _tabController.index = _tabController.previousIndex;
-              },
               tabs: const [
                 Tab(text: 'THEMES'),
                 Tab(text: 'PRIZE POOL'),
@@ -155,7 +172,9 @@ class LeagueScreenState extends State<LeagueScreen>
           children: [
             Expanded(
               child: Padding(
-                padding: EdgeInsets.all(constraints.maxWidth * 0.04),
+                padding: EdgeInsets.symmetric(
+                    horizontal: constraints.maxWidth * 0.04,
+                    vertical: constraints.maxWidth * 0.08),
                 child: GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: constraints.maxWidth > 600 ? 4 : 3,
@@ -268,7 +287,9 @@ class LeagueScreenState extends State<LeagueScreen>
           children: [
             Expanded(
               child: Padding(
-                padding: EdgeInsets.all(constraints.maxWidth * 0.04),
+                padding: EdgeInsets.symmetric(
+                    horizontal: constraints.maxWidth * 0.04,
+                    vertical: constraints.maxWidth * 0.08),
                 child: GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: constraints.maxWidth > 600 ? 4 : 3,
@@ -371,123 +392,3 @@ class LeagueScreenState extends State<LeagueScreen>
     );
   }
 }
-
-// class CustomButton extends StatelessWidget {
-//   final VoidCallback onTap;
-//   final String text;
-
-//   const CustomButton({
-//     super.key,
-//     required this.onTap,
-//     required this.text,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return GestureDetector(
-//       onTap: onTap,
-//       child: Container(
-//         padding: const EdgeInsets.symmetric(vertical: 12),
-//         decoration: BoxDecoration(
-//           gradient: const LinearGradient(
-//             colors: [Colors.purple, Colors.deepPurple],
-//           ),
-//           borderRadius: BorderRadius.circular(8),
-//           boxShadow: [
-//             BoxShadow(
-//               color: Colors.purple.withOpacity(0.3),
-//               spreadRadius: 1,
-//               blurRadius: 4,
-//               offset: const Offset(0, 2),
-//             ),
-//           ],
-//         ),
-//         child: Center(
-//           child: Text(
-//             text,
-//             style: const TextStyle(
-//               color: Colors.white,
-//               fontSize: 16,
-//               fontWeight: FontWeight.bold,
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// class ComplexGradientPainter extends CustomPainter {
-//   final Animation<double> animation;
-//   final Animation<double> rotationAnimation;
-//   final Animation<double> scaleAnimation;
-//   final Animation<Color?> colorAnimation1;
-//   final Animation<Color?> colorAnimation2;
-
-//   ComplexGradientPainter({
-//     required this.animation,
-//     required this.rotationAnimation,
-//     required this.scaleAnimation,
-//     required this.colorAnimation1,
-//     required this.colorAnimation2,
-//   });
-
-//   @override
-//   void paint(Canvas canvas, Size size) {
-//     final Rect rect = Offset.zero & size;
-//     final center = Offset(size.width / 2, size.height / 2);
-
-//     // Create multiple gradient layers
-//     for (int i = 0; i < 3; i++) {
-//       final double phase = animation.value + (i * 3.14159 / 3);
-//       final double scale = scaleAnimation.value + (i * 0.02);
-
-//       final Gradient gradient = RadialGradient(
-//         center: Alignment(
-//           cos(phase) * 0.5,
-//           sin(phase) * 0.5,
-//         ),
-//         colors: [
-//           colorAnimation1.value ?? Colors.purple[900]!,
-//           colorAnimation2.value ?? Colors.deepPurple[700]!,
-//           Colors.purple[500]!.withOpacity(0.5),
-//           Colors.deepPurple[900]!.withOpacity(0.8),
-//         ],
-//         stops: const [0.0, 0.3, 0.6, 1.0],
-//         radius: 1.5 * scale,
-//       );
-
-//       final Paint paint = Paint()
-//         ..shader = gradient.createShader(rect)
-//         ..blendMode = BlendMode.overlay;
-
-//       canvas.save();
-//       canvas.translate(center.dx, center.dy);
-//       canvas.rotate(rotationAnimation.value * 0.2 * i);
-//       canvas.scale(scale);
-//       canvas.translate(-center.dx, -center.dy);
-//       canvas.drawRect(rect, paint);
-//       canvas.restore();
-//     }
-
-//     // Add metallic shine effect
-//     final Paint shinePaint = Paint()
-//       ..shader = LinearGradient(
-//         begin: Alignment(cos(animation.value), sin(animation.value)),
-//         end: Alignment(
-//             cos(animation.value + 3.14159), sin(animation.value + 3.14159)),
-//         colors: [
-//           Colors.white.withOpacity(0.0),
-//           Colors.white.withOpacity(0.2),
-//           Colors.white.withOpacity(0.0),
-//         ],
-//         stops: const [0.0, 0.5, 1.0],
-//       ).createShader(rect)
-//       ..blendMode = BlendMode.overlay;
-
-//     canvas.drawRect(rect, shinePaint);
-//   }
-
-//   @override
-//   bool shouldRepaint(ComplexGradientPainter oldDelegate) => true;
-// }

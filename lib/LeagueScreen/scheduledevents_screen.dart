@@ -1,4 +1,6 @@
+import 'package:AAG/LeagueScreen/scheduledleaguescreen.dart';
 import 'package:AAG/PublishGameScreen/schedulegamescreen_2.dart';
+import 'package:AAG/TournamentScreen/scheduletournamentscreen_2.dart';
 import 'package:flutter/material.dart';
 
 class ScheduledEventsScreen extends StatefulWidget {
@@ -9,7 +11,8 @@ class ScheduledEventsScreen extends StatefulWidget {
 }
 
 class _ScheduledEventsScreenState extends State<ScheduledEventsScreen>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
+  // Changed from SingleTickerProviderStateMixin
   late TabController _tabController;
   bool isGamesSelected = true;
   bool isLeagueSelected = true;
@@ -20,6 +23,33 @@ class _ScheduledEventsScreenState extends State<ScheduledEventsScreen>
     _tabController = TabController(length: 2, vsync: this);
   }
 
+  void _handleViewNavigation() {
+    if (isGamesSelected) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const EditableScheduledGameScreen(),
+        ),
+      );
+    } else {
+      if (isLeagueSelected) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ScheduledLeagueScreen(),
+          ),
+        );
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const EditableScheduledTournamentScreen(),
+          ),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,8 +58,9 @@ class _ScheduledEventsScreenState extends State<ScheduledEventsScreen>
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: const Text(
-          'LEAGUES',
-          style: TextStyle(color: Colors.white),
+          'SCHEDULED EVENTS',
+          style: TextStyle(
+              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
           icon: const Icon(
@@ -51,35 +82,12 @@ class _ScheduledEventsScreenState extends State<ScheduledEventsScreen>
         child: SafeArea(
           child: Column(
             children: [
-              // App Bar
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.arrow_back, color: Colors.white),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    const Text(
-                      'SCHEDULED GAMES/EVENTS',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              // Games/Events Toggle
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                ),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.orange)),
                 child: Row(
                   children: [
                     Expanded(
@@ -145,8 +153,6 @@ class _ScheduledEventsScreenState extends State<ScheduledEventsScreen>
                   ],
                 ),
               ),
-
-              // League/Tournament Toggle (only visible in Events tab)
               if (!isGamesSelected)
                 Container(
                   margin: const EdgeInsets.all(16),
@@ -221,8 +227,6 @@ class _ScheduledEventsScreenState extends State<ScheduledEventsScreen>
                     ],
                   ),
                 ),
-
-              // Month Header
               const Padding(
                 padding: EdgeInsets.all(16.0),
                 child: Align(
@@ -236,8 +240,6 @@ class _ScheduledEventsScreenState extends State<ScheduledEventsScreen>
                   ),
                 ),
               ),
-
-              // List of scheduled events
               Expanded(
                 child: ListView.builder(
                   itemCount: 8,
@@ -283,32 +285,42 @@ class _ScheduledEventsScreenState extends State<ScheduledEventsScreen>
       child: ListTile(
         title: const Text(
           'Monday, 11, 2023',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(fontSize: 16, color: Colors.white),
         ),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
-              '8:30 AM',
-              style: TextStyle(color: Colors.white),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  '8:30 AM',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+              ],
             ),
-            const SizedBox(width: 8),
-            Text(
-              'View  ',
-              style: TextStyle(color: const Color.fromARGB(255, 233, 116, 17)),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.05,
             ),
             GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const EditableScheduledGameScreen(),
+              onTap: _handleViewNavigation,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'View ',
+                    style: TextStyle(
+                        fontSize: 16, color: Color.fromARGB(255, 233, 116, 17)),
                   ),
-                );
-              },
-              child: const Icon(
-                Icons.remove_red_eye,
-                color: Color.fromARGB(255, 233, 116, 17),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.02,
+                  ),
+                  const Icon(
+                    Icons.remove_red_eye,
+                    color: Color.fromARGB(255, 233, 116, 17),
+                  ),
+                ],
               ),
             ),
           ],

@@ -71,17 +71,9 @@ class _LeaderboardWidgetState extends State<LeaderboardWidget>
     }
   }
 
-  Future<void> _onSwipe(DragEndDetails details) async {
-    if (_isAnimating) return;
-
-    int newIndex;
-    if (details.primaryVelocity! > 0) {
-      // Swiped right
-      newIndex = (_currentIndex - 1 + _categories.length) % _categories.length;
-    } else {
-      // Swiped left
-      newIndex = (_currentIndex + 1) % _categories.length;
-    }
+  // Updated to handle both swipe and tap animations
+  Future<void> _switchToTab(int newIndex) async {
+    if (_isAnimating || newIndex == _currentIndex) return;
 
     // Haptic feedback
     await HapticFeedback.mediumImpact();
@@ -95,6 +87,21 @@ class _LeaderboardWidgetState extends State<LeaderboardWidget>
     setState(() {
       _isAnimating = false;
     });
+  }
+
+  Future<void> _onSwipe(DragEndDetails details) async {
+    if (_isAnimating) return;
+
+    int newIndex;
+    if (details.primaryVelocity! > 0) {
+      // Swiped right
+      newIndex = (_currentIndex - 1 + _categories.length) % _categories.length;
+    } else {
+      // Swiped left
+      newIndex = (_currentIndex + 1) % _categories.length;
+    }
+
+    await _switchToTab(newIndex);
   }
 
   @override
@@ -117,7 +124,7 @@ class _LeaderboardWidgetState extends State<LeaderboardWidget>
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   for (int i = 0; i < _categories.length; i++)
-                    _leaderboardTab(_categories[i], _currentIndex == i),
+                    _leaderboardTab(_categories[i], _currentIndex == i, i),
                 ],
               ),
             ),
@@ -159,15 +166,13 @@ class _LeaderboardWidgetState extends State<LeaderboardWidget>
     );
   }
 
-  Widget _leaderboardTab(String text, bool isActive) {
+  // Updated _leaderboardTab to use the new _switchToTab method
+  Widget _leaderboardTab(String text, bool isActive, int index) {
     return GestureDetector(
       onTap: () async {
-        if (_currentIndex != _categories.indexOf(text) && !_isAnimating) {
+        if (!_isAnimating) {
           await HapticFeedback.selectionClick();
-          await _onSwipe(DragEndDetails(
-            primaryVelocity:
-                _categories.indexOf(text) > _currentIndex ? -1000 : 1000,
-          ));
+          await _switchToTab(index);
         }
       },
       child: Container(
@@ -215,7 +220,6 @@ class _LeaderboardWidgetState extends State<LeaderboardWidget>
         child: Row(
           children: [
             if (isTopThree) _buildMedal(rank),
-            // Display the medal image if the name is "You"
             if (name == 'You') ...[
               const SizedBox(width: 2),
               Image.asset(

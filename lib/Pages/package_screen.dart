@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import
+// ignore_for_file: unused_import, deprecated_member_use
 
 import 'package:AAG/tobeadded/movingbutton.dart';
 import 'package:flutter/material.dart';
@@ -15,105 +15,116 @@ class PackageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Image.asset(
-            'lib/images/idkbg.jpg',
-            fit: BoxFit.cover,
-            width: double.infinity,
-            height: double.infinity,
-          ),
-          SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: Row(
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.arrow_back, color: Colors.white),
-                        onPressed: () =>
-                            Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => const LoginScreen(),
-                        )),
-                      ),
-                      const SizedBox(width: 16),
-                      const Text(
-                        'SUBSCRIPTION',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+    return PopScope(
+      canPop: false, // Prevent default back behavior
+      onPopInvoked: (didPop) {
+        if (didPop) return;
+        // Navigate to LoginScreen instead of closing the app
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => const LoginScreen()),
+        );
+      },
+      child: Scaffold(
+        body: Stack(
+          children: [
+            Image.asset(
+              'lib/images/idkbg.jpg',
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: double.infinity,
+            ),
+            SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon:
+                              const Icon(Icons.arrow_back, color: Colors.white),
+                          onPressed: () =>
+                              Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => const LoginScreen(),
+                          )),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Center(
-                    child: LayoutBuilder(
-                      builder: (context, constraints) {
-                        return SingleChildScrollView(
-                          child: Wrap(
-                            spacing: 16,
-                            runSpacing: 16,
-                            alignment: WrapAlignment.center,
-                            children: [
-                              // ₹/month
-                              _buildPackageOption(
-                                context,
-                                'Standard',
-                                '100K+ Followers',
-                                '₹10,000/month',
-                                'month',
-                                const Color.fromARGB(255, 113, 47, 160),
-                                const Color.fromARGB(255, 54, 47, 145),
-                                constraints,
-                              ),
-                              _buildPackageOption(
-                                context,
-                                'Pro',
-                                '500K+ Followers',
-                                '₹20,000/month',
-                                'month',
-                                const Color.fromARGB(255, 239, 38, 209),
-                                const Color.fromARGB(255, 255, 111, 79),
-                                constraints,
-                              ),
-                              _buildPackageOption(
-                                context,
-                                'Elite',
-                                '1M+ Followers',
-                                '₹30,000/month',
-                                'month',
-                                const Color.fromARGB(155, 239, 105, 82),
-                                const Color.fromARGB(155, 255, 249, 71),
-                                constraints,
-                              ),
-                              _buildPackageOption(
-                                context,
-                                'Enterprise',
-                                '100K+ Followers',
-                                'Contact us for details',
-                                'month',
-                                const Color.fromARGB(255, 3, 189, 156),
-                                const Color.fromARGB(255, 3, 87, 12),
-                                constraints,
-                              ),
-                            ],
+                        const SizedBox(width: 16),
+                        const Text(
+                          'SUBSCRIPTION',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
-                        );
-                      },
+                        ),
+                      ],
                     ),
                   ),
-                ),
-              ],
+                  Expanded(
+                    child: Center(
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          return SingleChildScrollView(
+                            child: Wrap(
+                              spacing: 16,
+                              runSpacing: 16,
+                              alignment: WrapAlignment.center,
+                              children: [
+                                // ₹/month
+                                _buildPackageOption(
+                                  context,
+                                  'Standard',
+                                  '100K+ Followers',
+                                  '₹10,000/month',
+                                  'month',
+                                  const Color.fromARGB(255, 113, 47, 160),
+                                  const Color.fromARGB(255, 54, 47, 145),
+                                  constraints,
+                                ),
+                                _buildPackageOption(
+                                  context,
+                                  'Pro',
+                                  '500K+ Followers',
+                                  '₹20,000/month',
+                                  'month',
+                                  const Color.fromARGB(255, 239, 38, 209),
+                                  const Color.fromARGB(255, 255, 111, 79),
+                                  constraints,
+                                ),
+                                _buildPackageOption(
+                                  context,
+                                  'Elite',
+                                  '1M+ Followers',
+                                  '₹30,000/month',
+                                  'month',
+                                  const Color.fromARGB(155, 239, 105, 82),
+                                  const Color.fromARGB(155, 255, 249, 71),
+                                  constraints,
+                                ),
+                                _buildPackageOption(
+                                  context,
+                                  'Enterprise',
+                                  '100K+ Followers',
+                                  'Contact us for details',
+                                  'month',
+                                  const Color.fromARGB(255, 3, 189, 156),
+                                  const Color.fromARGB(255, 3, 87, 12),
+                                  constraints,
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -176,163 +187,247 @@ class PackageScreen extends StatelessWidget {
 
   void _showPackageDetails(BuildContext context, String title, String price,
       Color gradientColor1, Color gradientColor2) {
-    showDialog(
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
+
+    showModalBottomSheet(
       context: context,
-      // barrierDismissible: false,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      enableDrag: true,
       builder: (BuildContext context) {
-        return TweenAnimationBuilder(
-          duration: const Duration(milliseconds: 300),
-          tween: Tween<double>(begin: 0, end: 1),
-          builder: (BuildContext context, double value, Widget? child) {
-            return Transform.scale(
-              scale: value,
-              child: Opacity(
-                opacity: value,
-                child: Dialog(
-                  backgroundColor: Colors.transparent,
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      double maxWidth = constraints.maxWidth > 650
-                          ? 500
-                          : constraints.maxWidth;
-                      double maxHeight = constraints.maxHeight > 900
-                          ? 780
-                          : constraints.maxHeight * 0.75;
-                      Color gradientColor3 = Colors.red;
-                      Color gradientColor4 =
-                          const Color.fromARGB(255, 231, 57, 44);
-                      return Container(
-                        constraints: BoxConstraints(
-                            maxWidth: maxWidth, maxHeight: maxHeight),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(
-                              color: const Color.fromARGB(138, 250, 250, 250),
-                              width: 1.2),
-                        ),
-                        child: MovingGradientBorder(
-                          width: maxWidth,
-                          height: maxHeight,
-                          gradientColors: [
-                            gradientColor1.withOpacity(0.90),
-                            gradientColor2.withOpacity(0.90),
-                            gradientColor1.withOpacity(0.90),
-                          ],
-                          child: Stack(
-                            clipBehavior: Clip.none,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(0),
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      const SizedBox(height: 20),
-                                      Text(
-                                        title.toUpperCase(),
-                                        style: const TextStyle(
-                                          color: Colors.orange,
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 20),
-                                      ..._getFeatures(title, gradientColor1,
-                                          gradientColor2),
-                                      ..._getFeatures2(title, gradientColor3,
-                                          gradientColor4),
-                                      const SizedBox(height: 30),
-                                      MovingGradientBorder2(
-                                        width: maxWidth,
-                                        height: 40,
-                                        gradientColors: [
-                                          gradientColor1,
-                                          gradientColor2,
-                                          gradientColor1,
-                                        ],
-                                        child: Center(
-                                          child: Text(
-                                            price,
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 24,
-                                              fontWeight: FontWeight.w900,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 30),
-                                      PremiumShimmerButton(
-                                        width: 160,
-                                        height: 40,
-                                        gradientColors: [
-                                          gradientColor1,
-                                          gradientColor2,
-                                          gradientColor3
-                                        ],
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                          Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                              builder: (_) => SignUpPage(
-                                                  selectedPlan: title),
-                                            ),
-                                          );
-                                        },
-                                        child: const Text(
-                                          'Subscribe',
-                                          style: TextStyle(
+        return Stack(
+          clipBehavior: Clip.none,
+          children: [
+            // Main Bottom Sheet
+            StatefulBuilder(
+              builder: (context, setState) {
+                return TweenAnimationBuilder(
+                  duration: const Duration(milliseconds: 300),
+                  tween: Tween<double>(begin: 0, end: 1),
+                  builder: (BuildContext context, double value, Widget? child) {
+                    return Transform.scale(
+                      scale: value,
+                      child: Opacity(
+                        opacity: value,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.black54, // Dark overlay
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
+                            ),
+                          ),
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            height: MediaQuery.of(context).size.height * 0.8,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                colors: [
+                                  gradientColor1
+                                      .withOpacity(0.75), // Adjusted opacity
+                                  gradientColor2.withOpacity(0.75),
+                                  gradientColor1.withOpacity(0.75),
+                                ],
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20),
+                              ),
+                              border: Border.all(
+                                color: const Color.fromARGB(138, 250, 250, 250),
+                                width: 1.2,
+                              ),
+                            ),
+                            child: Column(
+                              children: [
+                                // Header with gradient
+                                Container(
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      begin: Alignment.bottomCenter,
+                                      end: Alignment.topCenter,
+                                      colors: [
+                                        gradientColor1,
+                                        gradientColor2,
+                                        gradientColor1,
+                                      ],
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      topRight: Radius.circular(20),
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 18.0, vertical: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        // IconButton(
+                                        //   icon: const Icon(Icons.arrow_back,
+                                        //       color: Colors.white),
+                                        //   onPressed: () =>
+                                        //       Navigator.pop(context),
+                                        // ),
+                                        Text(
+                                          title.toUpperCase(),
+                                          style: const TextStyle(
                                             color: Colors.white,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w900,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      GestureDetector(
-                                        onTap: () =>
-                                            Navigator.of(context).pop(),
-                                        child: Container(
-                                          decoration: const BoxDecoration(
-                                            color: Colors.transparent,
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: const Padding(
-                                            padding: EdgeInsets.all(7.0),
-                                            child: TextButton(
-                                              onPressed: null,
-                                              child: Text(
-                                                "Choose other Plan",
+                                      ],
+                                    ),
+                                  ),
+                                ),
+
+                                // Content
+                                Expanded(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.black.withOpacity(
+                                          0.3), // Additional content overlay
+                                    ),
+                                    child: SingleChildScrollView(
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: isSmallScreen ? 12 : 16,
+                                        ),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            const SizedBox(height: 20),
+                                            ..._getFeatures(title,
+                                                gradientColor1, gradientColor2),
+                                            ..._getFeatures2(
+                                                title,
+                                                const Color.fromARGB(
+                                                    255, 255, 17, 0),
+                                                const Color.fromARGB(
+                                                    148, 255, 255, 255)),
+                                            const SizedBox(height: 30),
+                                            PremiumShimmerButton(
+                                              width: 160,
+                                              height: 40,
+                                              gradientColors: [
+                                                gradientColor1,
+                                                gradientColor2,
+                                                Colors.red,
+                                              ],
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                                Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                    builder: (_) => SignUpPage(
+                                                        selectedPlan: title),
+                                                  ),
+                                                );
+                                              },
+                                              child: const Text(
+                                                'Subscribe',
                                                 style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  color: Colors.white24,
+                                                  color: Colors.white,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w900,
                                                 ),
                                               ),
                                             ),
-                                          ),
+                                            const SizedBox(height: 30),
+                                            MovingGradientBorder2(
+                                              width: screenSize.width * 0.5,
+                                              height: 40,
+                                              gradientColors: [
+                                                gradientColor1,
+                                                gradientColor2,
+                                                gradientColor1,
+                                              ],
+                                              child: Center(
+                                                child: Text(
+                                                  price,
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 24,
+                                                    fontWeight: FontWeight.w900,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            // const SizedBox(height: 30),
+                                            // TextButton(
+                                            //   onPressed: () =>
+                                            //       Navigator.of(context).pop(),
+                                            //   child: const Text(
+                                            //     "Choose other Plan",
+                                            //     style: TextStyle(
+                                            //       fontSize: 16.0,
+                                            //       color: Colors.white24,
+                                            //     ),
+                                            //   ),
+                                            // ),
+                                            SizedBox(
+                                                height: MediaQuery.of(context)
+                                                        .padding
+                                                        .bottom +
+                                                    20),
+                                          ],
                                         ),
-                                      )
-                                    ],
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      );
-                    },
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+
+            // Floating Close Button
+            Positioned(
+              top: -50,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: GestureDetector(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[800],
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          spreadRadius: 1,
+                          blurRadius: 3,
+                          offset: const Offset(0, 1),
+                        ),
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.close_rounded,
+                      color: Colors.white,
+                      size: 24,
+                    ),
                   ),
                 ),
               ),
-            );
-          },
+            ),
+          ],
         );
       },
     );
   }
-
   // String _formatPrice(int price) {
   //   return price.toString().replaceAllMapped(
   //         RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
@@ -603,7 +698,7 @@ class _MovingGradientBorder2State extends State<MovingGradientBorder2>
               width: widget.width + 1,
               height: widget.height + 1,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(0),
+                borderRadius: BorderRadius.circular(12),
                 gradient: LinearGradient(
                   colors: widget.gradientColors,
                   stops: [
@@ -623,7 +718,7 @@ class _MovingGradientBorder2State extends State<MovingGradientBorder2>
           height: widget.height,
           decoration: BoxDecoration(
             color: Colors.transparent,
-            borderRadius: BorderRadius.circular(0),
+            borderRadius: BorderRadius.circular(12),
           ),
           child: widget.child,
         ),

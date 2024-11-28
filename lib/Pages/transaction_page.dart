@@ -26,106 +26,176 @@ class InvoiceHistoryScreen extends StatelessWidget {
   const InvoiceHistoryScreen({super.key});
 
   void _showTransactionDetails(BuildContext context, Transaction transaction) {
-    showDialog(
+    showModalBottomSheet(
       context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      enableDrag: true,
       builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Container(
-            // width: MediaQuery.of(context).size.width * 0.90,
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  Color(0xFF35035A),
-                  Color(0xFF510985),
-                  Color(0xFF35035A),
+        return Stack(
+          clipBehavior: Clip.none,
+          children: [
+            // Main Bottom Sheet
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              height:
+                  MediaQuery.of(context).size.height * 0.5, // Reduced from 0.6
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    Color(0xFF35035A),
+                    Color(0xFF510985),
+                    Color(0xFF35035A),
+                  ],
+                  stops: [0.1572, 0.50, 0.8753],
+                ),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+                border: Border(
+                  top: BorderSide(color: Colors.orange, width: 2),
+                  left: BorderSide(color: Colors.orange, width: 2),
+                  right: BorderSide(color: Colors.orange, width: 2),
+                ),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Header
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 40, // Reduced from 50
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(16),
+                        topRight: Radius.circular(16),
+                      ),
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xFF83410A),
+                          Color(0xFFE97411),
+                          Color(0xFF88440A),
+                        ],
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                      ),
+                    ),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          'TRANSACTION DETAILS',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18, // Reduced from 20
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 10), // Reduced from 15
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
+                          child: Text(
+                            '${transaction.date.day} ${_getMonth(transaction.date.month)} ${transaction.date.year}, ${_formatTime(transaction.date)}',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 14, // Reduced from 16
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20), // Reduced from 40
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              transaction.type == 'Cr' ? 'Credited' : 'Debited',
+                              style: const TextStyle(
+                                color: Color(0xFFE97411),
+                                fontSize: 15, // Reduced from 16
+                              ),
+                            ),
+                            Text(
+                              '₹${transaction.amount.toStringAsFixed(2)}',
+                              style: TextStyle(
+                                color: transaction.type == 'Cr'
+                                    ? Colors.green
+                                    : Colors.red,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12), // Reduced from 16
+                        _buildTransactionDetail(
+                          'UPI Transaction ID',
+                          transaction.upiTransactionId,
+                        ),
+                        _buildTransactionDetail('To', transaction.to),
+                        _buildTransactionDetail('From', transaction.from),
+                        _buildTransactionDetail(
+                          'Transaction ID',
+                          transaction.transactionId,
+                        ),
+                        const SizedBox(height: 20), // Reduced from 40
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            _buildGradientButton('Send Email', () {}),
+                            _buildGradientButton('PDF Download', () {}),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
-                stops: [0.1572, 0.50, 0.8753],
-              ),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: Colors.orange,
-                width: 2,
               ),
             ),
-            padding: const EdgeInsets.all(5),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.close, color: Colors.white),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'TRANSACTION DETAILS',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+
+            // Floating Close Button
+            Positioned(
+              top: -50,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: GestureDetector(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: Container(
+                    width: 36, // Reduced from 40
+                    height: 36, // Reduced from 40
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xFF712FA0),
+                          Color(0xFF362F91),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
                       ),
                     ),
-                    const SizedBox(width: 20),
-                    // IconButton(
-                    //   icon: const Icon(Icons.close, color: Colors.white),
-                    //   onPressed: () => Navigator.pop(context),
-                    // ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  '${transaction.date.day} ${_getMonth(transaction.date.month)} ${transaction.date.year}, ${_formatTime(transaction.date)}',
-                  style: TextStyle(color: Colors.white, fontSize: 14),
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      transaction.type == 'Cr' ? 'Credited' : 'Debited',
-                      style: TextStyle(color: Colors.white, fontSize: 14),
+                    child: const Icon(
+                      Icons.close_rounded,
+                      color: Colors.white,
+                      size: 20, // Reduced from 24
                     ),
-                    Text(
-                      '₹${transaction.amount.toStringAsFixed(2)}',
-                      style: TextStyle(
-                        color: transaction.type == 'Cr'
-                            ? Colors.green
-                            : Colors.red,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-                const SizedBox(height: 16),
-                _buildTransactionDetail(
-                    'UPI Transaction ID', transaction.upiTransactionId),
-                _buildTransactionDetail('To', transaction.to),
-                _buildTransactionDetail('From', transaction.from),
-                _buildTransactionDetail(
-                    'Transaction ID', transaction.transactionId),
-                const SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _buildGradientButton('Send Email', () {}),
-                    _buildGradientButton('PDF Download', () {}),
-                  ],
-                ),
-              ],
+              ),
             ),
-          ),
+          ],
         );
       },
     );
@@ -146,14 +216,14 @@ class InvoiceHistoryScreen extends StatelessWidget {
           ],
           stops: [0.071, 0.491, 0.951],
         ),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(12),
       ),
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(12),
           ),
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -177,11 +247,11 @@ class InvoiceHistoryScreen extends StatelessWidget {
         children: [
           Text(
             label,
-            style: const TextStyle(color: Colors.white, fontSize: 14),
+            style: const TextStyle(color: Color(0xFFE97411), fontSize: 16),
           ),
           Text(
             value,
-            style: const TextStyle(color: Colors.white, fontSize: 14),
+            style: const TextStyle(color: Colors.white, fontSize: 16),
           ),
         ],
       ),
@@ -292,18 +362,6 @@ class InvoiceHistoryScreen extends StatelessWidget {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text(
-          'TRANSACTIONS',
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -311,12 +369,44 @@ class InvoiceHistoryScreen extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        child: ListView(
-          padding: const EdgeInsets.only(top: 100, left: 16, right: 16),
+        child: Column(
           children: [
-            _buildMonthSection('October 2024'),
-            ...transactions
-                .map((transaction) => _buildInvoiceItem(context, transaction)),
+            // Custom AppBar
+            Padding(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).padding.top + 8,
+                left: 8,
+                right: 8,
+                bottom: 8,
+              ),
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.arrow_back, color: Colors.white),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  const Text(
+                    'TRANSACTIONS',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // Content
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                children: [
+                  _buildMonthSection('October 2024'),
+                  ...transactions.map(
+                      (transaction) => _buildInvoiceItem(context, transaction)),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -330,8 +420,8 @@ class InvoiceHistoryScreen extends StatelessWidget {
         month,
         style: const TextStyle(
           color: Colors.white,
-          fontSize: 18,
-          fontWeight: FontWeight.w500,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );
@@ -379,7 +469,7 @@ class InvoiceHistoryScreen extends StatelessWidget {
                 style: TextStyle(
                   color: transaction.type == 'Cr' ? Colors.green : Colors.red,
                   fontSize: 16,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(width: 4),

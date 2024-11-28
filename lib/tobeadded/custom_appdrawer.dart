@@ -1,11 +1,12 @@
 import 'package:AAG/Account_Screen/account_screen.dart';
 import 'package:AAG/ActiveSession_Screen/activesession_screen.dart';
-import 'package:AAG/PublishGameScreen/gamescreen.dart';
-import 'package:AAG/PublishGameScreen/subscriptionscreen.dart';
+import 'package:AAG/FAQScreen/faq_screen_1.dart';
+import 'package:AAG/PublishGameScreen/publishscreen.dart';
 import 'package:AAG/LeagueScreen/scheduledevents_screen.dart';
 import 'package:AAG/Pages/leaderboardpage.dart';
 import 'package:AAG/Pages/loginsignup.dart';
 import 'package:AAG/Pages/transaction_page.dart';
+import 'package:AAG/PublishGameScreen/subscriptionscreen.dart';
 import 'package:AAG/Refer%20and%20Earn/referandearnscreen.dart';
 import 'package:AAG/SettingPage/settingspage.dart';
 import 'package:AAG/tobeadded/underdevelopment.dart';
@@ -153,7 +154,7 @@ class CustomDrawer extends StatelessWidget {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const AppGamesScreen()),
+                                                    const PublishGamesScreen()),
                                           )),
                                   _buildAnimatedListTile(
                                       icon: 'lib/images/active.png',
@@ -233,17 +234,14 @@ class CustomDrawer extends StatelessWidget {
                                   ),
                                   Divider(color: Colors.white.withOpacity(0.2)),
                                   _buildAnimatedListTile(
-                                    icon: Icons.help_outline,
-                                    title: 'Help / Support',
-                                    onTap: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) => const CustomPopup(
-                                            title: 'Help & Support'),
-                                      );
-                                    },
-                                    iconColor: Colors.white,
-                                  ),
+                                      icon: Icons.help_outline,
+                                      title: 'Help / Support',
+                                      onTap: () => Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const FAQPage()),
+                                          )),
                                   _buildAnimatedListTile(
                                     icon: Icons.logout,
                                     title: 'Logout Account',

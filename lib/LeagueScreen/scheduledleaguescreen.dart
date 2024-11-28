@@ -13,7 +13,7 @@ class ScheduledLeagueScreen extends StatefulWidget {
 }
 
 class _ScheduledLeagueScreenState extends State<ScheduledLeagueScreen>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
   bool _visible = false;
@@ -290,15 +290,25 @@ class _ScheduledLeagueScreenState extends State<ScheduledLeagueScreen>
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const Center(
-                      child: Text(
-                        'Your League has \n  been Scheduled',
-                        style: TextStyle(
-                          color: Colors.orange,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+                    Column(
+                      children: [
+                        Text(
+                          'Your League has',
+                          style: TextStyle(
+                            color: Colors.orange,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
+                        Text(
+                          'been Scheduled',
+                          style: TextStyle(
+                            color: Colors.orange,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

@@ -59,7 +59,11 @@ class _CustomAppBarState extends State<CustomAppBar>
     _spinController.forward().then((_) => _spinController.reverse());
 
     // Play notification sound
-    await _audioPlayer.play(AssetSource('images/bell_ring.mp3'));
+    try {
+      await _audioPlayer.play(AssetSource('assets/images/bell_ring.wav'));
+    } catch (e) {
+      debugPrint('Error playing audio: $e');
+    }
   }
 
   @override

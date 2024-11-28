@@ -9,14 +9,14 @@ import 'package:AAG/PublishGameScreen/scheduledgamescreen.dart';
 import 'package:AAG/tobeadded/gradient_button.dart';
 import 'package:intl/intl.dart';
 
-class GamesScreen extends StatefulWidget {
-  const GamesScreen({super.key});
+class PublishLudoScreen extends StatefulWidget {
+  const PublishLudoScreen({super.key});
 
   @override
-  _GamesScreenState createState() => _GamesScreenState();
+  _PublishLudoScreenState createState() => _PublishLudoScreenState();
 }
 
-class _GamesScreenState extends State<GamesScreen>
+class _PublishLudoScreenState extends State<PublishLudoScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
   int selectedThemeIndex = -1;
@@ -261,18 +261,6 @@ class _GamesScreenState extends State<GamesScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text(
-          'GAMES',
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -282,22 +270,42 @@ class _GamesScreenState extends State<GamesScreen>
         ),
         child: Column(
           children: [
-            const SizedBox(height: 70),
+            // Custom AppBar section
+            Padding(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).padding.top,
+                left: 8,
+                right: 8,
+                bottom: 8,
+              ),
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.arrow_back, color: Colors.white),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  const Text(
+                    'GAMES',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
             TabBar(
               controller: _tabController,
               indicatorColor: Colors.orange,
               indicatorWeight: 3,
               labelColor: Colors.orange,
               unselectedLabelColor: Colors.white,
-              onTap: (_) {
-                _tabController.index = _tabController.previousIndex;
-              },
               tabs: const [
                 Tab(text: 'THEMES'),
                 Tab(text: 'ENTRY FEES'),
               ],
             ),
-            // const SizedBox(height: 10),
             Expanded(
               child: TabBarView(
                 controller: _tabController,
@@ -308,39 +316,6 @@ class _GamesScreenState extends State<GamesScreen>
                 ],
               ),
             ),
-            // if (scheduledInfo != null)
-            //   Padding(
-            //     padding: const EdgeInsets.all(10),
-            //     child: Card(
-            //       color: Colors.white,
-            //       elevation: 4,
-            //       shape: RoundedRectangleBorder(
-            //         borderRadius: BorderRadius.circular(10),
-            //       ),
-            //       child: Padding(
-            //         padding: const EdgeInsets.all(10),
-            //         child: Column(
-            //           crossAxisAlignment: CrossAxisAlignment.start,
-            //           children: [
-            //             const Text(
-            //               'Scheduled Game',
-            //               style: TextStyle(
-            //                 fontSize: 16,
-            //                 fontWeight: FontWeight.bold,
-            //                 color: Colors.black,
-            //               ),
-            //             ),
-            //             const SizedBox(height: 5),
-            //             Text(
-            //               scheduledInfo!,
-            //               style: const TextStyle(
-            //                   fontSize: 14, color: Colors.black87),
-            //             ),
-            //           ],
-            //         ),
-            //       ),
-            //     ),
-            //   ),
           ],
         ),
       ),
@@ -356,7 +331,9 @@ class _GamesScreenState extends State<GamesScreen>
           children: [
             Expanded(
               child: Padding(
-                padding: EdgeInsets.all(constraints.maxWidth * 0.04),
+                padding: EdgeInsets.symmetric(
+                    horizontal: constraints.maxWidth * 0.04,
+                    vertical: constraints.maxWidth * 0.08),
                 child: GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: constraints.maxWidth > 600 ? 4 : 3,
@@ -471,7 +448,9 @@ class _GamesScreenState extends State<GamesScreen>
           children: [
             Expanded(
               child: Padding(
-                padding: EdgeInsets.all(constraints.maxWidth * 0.04),
+                padding: EdgeInsets.symmetric(
+                    horizontal: constraints.maxWidth * 0.04,
+                    vertical: constraints.maxWidth * 0.08),
                 child: GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: constraints.maxWidth > 600 ? 4 : 3,

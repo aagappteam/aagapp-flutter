@@ -1,6 +1,5 @@
-import 'package:AAG/Pages/package_screen.dart';
-import 'package:AAG/tobeadded/gradient_button.dart';
 import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class SubscriptionScreen extends StatefulWidget {
   const SubscriptionScreen({super.key});
@@ -11,8 +10,111 @@ class SubscriptionScreen extends StatefulWidget {
 
 class _SubscriptionScreenState extends State<SubscriptionScreen> {
   bool isMonthly = true;
-  String expandedPlan = '';
   String selectedPlan = '';
+  final PageController _pageController = PageController();
+
+  final List<Map<String, dynamic>> plans = [
+    {
+      'title': 'STANDARD',
+      'monthlyPrice': '₹10,000',
+      'annualPrice': '₹96,000', // 20% discount on annual plan
+      'subtitle': 'Must Have 100K+ Followers',
+      'color1': const Color.fromARGB(255, 113, 47, 160),
+      'color2': const Color.fromARGB(255, 54, 47, 145),
+      'features': [
+        'Must Have 100K+ Followers.',
+        'Upto 4 Themes/Skins for the game',
+        'Monthly Feature Slots for the games',
+        'Performance-Based Event Unlock',
+        'Referral Bonus',
+        'Analytics Dashboard',
+        'Priority Support',
+        'Unique Game invite link',
+      ],
+      'limitations': [
+        'No Daily/ Weekly League Access option',
+        'No Daily/ Weekly Tournament Access option',
+        'No Dedicated Relationship Manager',
+        'No Daily/ Weekly Promotional Activities',
+        'No Event Customization Option',
+      ],
+    },
+    {
+      'title': 'PRO',
+      'monthlyPrice': '₹20,000',
+      'annualPrice': '₹192,000', // 20% discount on annual plan
+      'subtitle': 'Must Have 500K+ Followers',
+      'color1': const Color.fromARGB(255, 239, 38, 209),
+      'color2': const Color.fromARGB(255, 255, 111, 79),
+      'features': [
+        'Must Have 500K+ Followers.',
+        'Updated Daily Game Publish Limit.',
+        'Upto 6 Themes/Skins for the game',
+        'Daily/Monthly Feature Slots for the games.',
+        'Performance-Based Events Unlock.',
+        'Referral Bonus',
+        'Analytics Dashboard',
+        'Priority Support',
+        'Unique Game invite link.',
+        'Daily/ Weekly League Access option.',
+        'Limited Time Tournament Access option.',
+        'Weekly/Monthly Promotional Activities.',
+        'Updated Games Access.',
+      ],
+      'limitations': [
+        'Limited Event Customization Options',
+        'No Dedicated Relationship Manager',
+      ],
+    },
+    {
+      'title': 'ELITE',
+      'monthlyPrice': '₹30,000',
+      'annualPrice': '₹288,000', // 20% discount on annual plan
+      'subtitle': 'Must Have 1M+ Followers',
+      'color1': const Color.fromARGB(155, 239, 105, 82),
+      'color2': const Color.fromARGB(155, 255, 249, 71),
+      'features': [
+        'Must-Have 1M+ Followers.',
+        'Updated Daily Game Publish Limit.',
+        'Upto 12 Themes/Skins for the game',
+        'Daily/Weekly/Monthly Feature Slots for the games.',
+        'Daily/ Weekly/Monthly League Access option.',
+        'Daily/Weekly/Monthly Tournament Access option.',
+        'Daily/Weekly/Monthly Promotional Activities.',
+        'Special Events Access.',
+        'Referral Bonus',
+        'Analytics Dashboard',
+        'Customized Game invite link.',
+        'All Platform Games Access.',
+        'Priority Access to Beta Features.',
+        'Additional Event Customization Options',
+        'Dedicated Relationship Manager'
+      ],
+      'limitations': [], // No limitations for Elite plan
+    },
+    {
+      'title': 'ENTERPRISE',
+      'monthlyPrice': '₹40,000',
+      'annualPrice': '₹384,000', // 20% discount on annual plan
+      'subtitle': 'Upto 10X Return',
+      'color1': const Color.fromARGB(255, 3, 189, 156),
+      'color2': const Color.fromARGB(255, 3, 87, 12),
+      'features': [
+        'Customized Features and Plan Details',
+        'Custom Plans For Business Individuals Only',
+        '10x Return',
+      ],
+      'limitations': [], // No limitations for Enterprise plan
+    },
+  ];
+
+  String _getPrice(Map<String, dynamic> plan) {
+    return isMonthly ? plan['monthlyPrice'] : plan['annualPrice'];
+  }
+
+  String _getPeriod() {
+    return isMonthly ? 'month' : 'year';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,80 +141,40 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
           ),
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: SafeArea(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'CURRENT PLAN',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        _buildPlanCard(
-                          'STANDARD',
-                          '₹10,000 / month',
-                          'Must Have 100K+ Followers',
-                          const Color.fromARGB(255, 113, 47, 160),
-                          const Color.fromARGB(255, 54, 47, 145),
-                        ),
-                        const SizedBox(height: 25),
-                        _buildSubscriptionToggle(),
-                        const SizedBox(height: 25),
-                        const Text(
-                          'UPGRADE OTHER PLANS',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        // _buildSubscriptionToggle(),
-                        const SizedBox(height: 25),
-                        _buildPlanCard(
-                          'PRO',
-                          '₹20,000 / month',
-                          'Must Have 500K+ Followers',
-                          const Color.fromARGB(255, 239, 38, 209),
-                          const Color.fromARGB(255, 255, 111, 79),
-                        ),
-                        const SizedBox(height: 25),
-                        _buildPlanCard(
-                          'ELITE',
-                          '₹30,000 / month',
-                          'Must Have 1M+ Followers',
-                          const Color.fromARGB(155, 239, 105, 82),
-                          const Color.fromARGB(155, 255, 249, 71),
-                        ),
-                        const SizedBox(height: 25),
-                        _buildPlanCard(
-                          'ENTERPRISE',
-                          '₹40,000 / month',
-                          'Upto 10X Return',
-                          const Color.fromARGB(255, 3, 189, 156),
-                          const Color.fromARGB(255, 3, 87, 12),
-                        ),
-                      ],
-                    ),
-                  ),
+            const SizedBox(height: kToolbarHeight + 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              child: Text(
+                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and s Ipsum.',
+                style: TextStyle(
+                  color: Colors.white.withOpacity(0.7),
+                  fontSize: 14,
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CustomButton(onTap: () {}, text: 'Continue'),
-                ],
+            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+            _buildSubscriptionToggle(),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.025),
+            Center(
+              child: SmoothPageIndicator(
+                controller: _pageController,
+                count: plans.length,
+                effect: WormEffect(
+                  dotColor: Colors.grey.withOpacity(0.5),
+                  activeDotColor: Colors.orange,
+                  dotHeight: 8,
+                  dotWidth: 8,
+                ),
+              ),
+            ),
+            const SizedBox(height: 5),
+            Expanded(
+              child: PageView.builder(
+                controller: _pageController,
+                itemCount: plans.length,
+                itemBuilder: (context, index) => _buildPlanCard(plans[index]),
               ),
             ),
           ],
@@ -121,158 +183,146 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
     );
   }
 
-  Widget _buildPlanCard(String title, String price, String subtitle,
-      Color gradientColor1, Color gradientColor2) {
-    bool isExpanded = expandedPlan == title;
-    return Column(
-      children: [
-        MovingGradientBorder(
-          width: MediaQuery.of(context).size.width - 32,
-          height: 131,
-          gradientColors: [gradientColor1, gradientColor2, gradientColor1],
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+  Widget _buildPlanCard(Map<String, dynamic> plan) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: Colors.orange.withOpacity(0.5)),
+      ),
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.7),
-              borderRadius: BorderRadius.circular(15),
+              gradient: LinearGradient(
+                colors: [plan['color1'], plan['color2']],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+              ),
             ),
-            child: Column(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          title,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          subtitle,
-                          style: const TextStyle(color: Colors.white70),
-                        ),
-                      ],
+                    Text(
+                      plan['title'],
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Text(
-                      price,
-                      style: const TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
+                      plan['subtitle'],
+                      style: TextStyle(
+                        color: Colors.white.withOpacity(0.7),
+                      ),
                     ),
                   ],
                 ),
-                IconButton(
-                  icon: Icon(
-                    isExpanded
-                        ? Icons.keyboard_arrow_up
-                        : Icons.keyboard_arrow_down,
-                    color: Colors.white,
-                  ),
-                  onPressed: () =>
-                      setState(() => expandedPlan = isExpanded ? '' : title),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      '${_getPrice(plan)} / ${_getPeriod()}',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    if (!isMonthly)
+                      Text(
+                        '20% savings',
+                        style: TextStyle(
+                          color: Colors.white.withOpacity(0.7),
+                          fontSize: 12,
+                        ),
+                      ),
+                  ],
                 ),
               ],
             ),
           ),
-        ),
-        if (isExpanded)
-          AnimatedContainer(
-            padding: const EdgeInsets.only(top: 20),
-            duration: const Duration(milliseconds: 500),
-            child: MovingGradientBorder(
-              width: MediaQuery.of(context).size.width - 32,
-              height: MediaQuery.of(context).size.height * 0.40,
-              gradientColors: [gradientColor1, gradientColor2, gradientColor1],
+          Expanded(
+            child: Container(
+              height: 300,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: SingleChildScrollView(
-                // This will prevent overflow
-                child: Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.7),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: _buildExpandedContent(
-                      title, gradientColor1, gradientColor2),
-                ),
-              ),
-            ),
-          ),
-      ],
-    );
-  }
-
-  Widget _buildExpandedContent(
-      String title, Color gradientColor1, Color gradientColor2) {
-    return SingleChildScrollView(
-      child: Container(
-        height: MediaQuery.of(context).size.height * 0.57,
-        child: Column(
-          children: [
-            ..._getFeatures(title, gradientColor1, gradientColor2),
-            ..._getFeatures2(
-                title, Colors.red, const Color.fromARGB(255, 231, 57, 44)),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSubscriptionToggle() {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.orange.withOpacity(0.5)),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: InkWell(
-              onTap: () => setState(() => isMonthly = true),
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                decoration: BoxDecoration(
-                  color: isMonthly ? Colors.orange : Colors.transparent,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
-                  ),
-                ),
-                child: const Center(
-                  child: Text(
-                    'Monthly',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: InkWell(
-              onTap: () => setState(() => isMonthly = false),
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                decoration: BoxDecoration(
-                  color: !isMonthly ? Colors.orange : Colors.transparent,
-                  borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(10),
-                    bottomRight: Radius.circular(10),
-                  ),
-                ),
-                child: const Center(
-                  child: Text(
-                    'Annual',
-                    style: TextStyle(color: Colors.white),
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 10),
+                    ...plan['features']
+                        .map<Widget>((feature) => _buildFeatureItem(
+                              feature,
+                              isPositive: true,
+                              colors: [plan['color1'], plan['color2']],
+                            )),
+                    ...plan['limitations']
+                        .map<Widget>((limitation) => _buildFeatureItem(
+                              limitation,
+                              isPositive: false,
+                              colors: [Colors.red, Colors.red.shade900],
+                            )),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 145,
+                          height: 40,
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              minimumSize: const Size(145, 30),
+                              backgroundColor: Colors.transparent,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
+                              ),
+                              padding: EdgeInsets.zero,
+                              elevation: 0,
+                            ),
+                            child: Ink(
+                              decoration: const BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Color(0xFF83410A),
+                                    Color(0xFFE97411),
+                                    Color(0xFF88440A),
+                                  ],
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter,
+                                ),
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(8),
+                                ),
+                              ),
+                              child: Container(
+                                alignment: Alignment.center,
+                                child: const Text(
+                                  'Choose Plan',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -282,208 +332,98 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
     );
   }
 
-  List<Widget> _getFeatures(
-      String title, Color gradientColor1, Color gradientColor2) {
-    List<String> features;
-    switch (title.toLowerCase()) {
-      case 'standard':
-        features = [
-          'Must Have 100K+ Followers.',
-          'Upto 4 Themes/Skins for the game',
-          'Monthly Feature Slots for the games.',
-          'Performance-Based Event Unlock.',
-          'Referral Bonus',
-          'Analytics Dashboard',
-          'Priority Support',
-          'Unique Game invite link.',
-          'Limited Games Access.'
-        ];
-        break;
-      case 'pro':
-        features = [
-          'Must Have 500K+ Followers.',
-          'Updated Daily Game Publish Limit.',
-          'Upto 6 Themes/Skins for the game',
-          'Daily/Monthly Feature Slots for the games.',
-          'Performance-Based Events Unlock.',
-          'Referral Bonus',
-          'Analytics Dashboard',
-          'Priority Support',
-          'Unique Game invite link.',
-          'Daily/ Weekly League Access option.',
-          'Limited Time Tournament Access option.',
-          'Weekly/Monthly Promotional Activities.',
-          'Updated Games Access.',
-        ];
-        break;
-      case 'elite':
-        features = [
-          'Must-Have 1M+ Followers.',
-          'Updated Daily Game Publish Limit.',
-          'Upto 12 Themes/Skins for the game',
-          'Daily/Weekly/Monthly Feature Slots for the games.',
-          'Daily/ Weekly/Monthly League Access option.',
-          'Daily/Weekly/Monthly Tournament Access option.',
-          'Daily/Weekly/Monthly Promotional Activities.',
-          'Special Events Access.',
-          'Referral Bonus',
-          'Analytics Dashboard',
-          'Customized Game invite link.',
-          'All Platform Games Access.',
-          'Priority Access to Beta Features.',
-          'Additional Event Customization Options',
-          'Dedicated Relationship Manager'
-        ];
-        break;
-      case 'enterprise':
-      default:
-        features = [
-          'Customized Features and Plan Details',
-          'Custom Plans For Business Individuals Only',
-          '10x Return',
-        ];
-        break;
-    }
+  Widget _buildFeatureItem(String text,
+      {required bool isPositive, required List<Color> colors}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        children: [
+          Container(
+            width: 20,
+            height: 20,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: LinearGradient(
+                colors: colors,
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+            child: Icon(
+              isPositive ? Icons.check : Icons.close,
+              color: Colors.white,
+              size: 14,
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              text,
+              style: TextStyle(
+                color: Colors.white.withOpacity(0.7),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
-    return features.map((feature) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4),
+  Widget _buildSubscriptionToggle() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.orange.withOpacity(0.5)),
+          borderRadius: BorderRadius.circular(10),
+        ),
         child: Row(
           children: [
-            GradientCheckbox(
-              gradientColors: [gradientColor1, gradientColor2],
-              value: true,
-              onChanged: (bool? value) {},
+            Expanded(
+              child: GestureDetector(
+                onTap: () => setState(() => isMonthly = true),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  decoration: BoxDecoration(
+                    color: isMonthly ? Colors.orange : Colors.transparent,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
+                    ),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Monthly',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
             ),
-            const SizedBox(width: 8),
-            Flexible(
-              child: Text(
-                feature,
-                style: const TextStyle(color: Colors.white70),
+            Expanded(
+              child: GestureDetector(
+                onTap: () => setState(() => isMonthly = false),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  decoration: BoxDecoration(
+                    color: !isMonthly ? Colors.orange : Colors.transparent,
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(10),
+                      bottomRight: Radius.circular(10),
+                    ),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Annual',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
               ),
             ),
           ],
         ),
-      );
-    }).toList();
-  }
-
-  List<Widget> _getFeatures2(
-      String title, Color gradientColor1, Color gradientColor2) {
-    List<String> features;
-    switch (title.toLowerCase()) {
-      case 'standard':
-        features = [
-          'No Daily/ Weekly League Access option.',
-          'No Daily/ Weekly Tournament Access option.',
-          'No Dedicated Relationship Manager',
-          'No Daily/ Weekly Promotional Activities.',
-          'No Event Customization Option',
-        ];
-        break;
-      case 'pro':
-        features = [
-          'Limited Event Customization Options',
-          'No Dedicated Relationship Manager'
-        ];
-        break;
-      case 'elite':
-        features = [];
-        break;
-      case 'enterprise':
-      default:
-        features = [];
-        break;
-    }
-
-    return features.map((feature) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4),
-        child: Row(
-          children: [
-            GradientCheckbox2(
-              gradientColors: [gradientColor1, gradientColor2],
-              value: true,
-              onChanged: (bool? value) {},
-            ),
-            const SizedBox(width: 8),
-            Flexible(
-              child: Text(
-                feature,
-                style: const TextStyle(color: Colors.white70),
-              ),
-            ),
-          ],
-        ),
-      );
-    }).toList();
-  }
-}
-
-class MovingGradientBorder extends StatefulWidget {
-  final double width;
-  final double height;
-  final List<Color> gradientColors;
-  final Widget child;
-
-  const MovingGradientBorder({
-    super.key,
-    required this.width,
-    required this.height,
-    required this.gradientColors,
-    required this.child,
-  });
-
-  @override
-  _MovingGradientBorderState createState() => _MovingGradientBorderState();
-}
-
-class _MovingGradientBorderState extends State<MovingGradientBorder>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(seconds: 3),
-      vsync: this,
-    )..repeat();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, child) {
-        return Container(
-          width: widget.width,
-          height: widget.height,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: widget.gradientColors,
-              stops: [
-                _controller.value - 0.3,
-                _controller.value,
-                _controller.value + 0.3,
-              ],
-            ),
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(2),
-            child: widget.child,
-          ),
-        );
-      },
+      ),
     );
   }
 }

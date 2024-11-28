@@ -63,18 +63,9 @@ class _LeaderboardPageState extends State<LeaderboardPage>
         _categories[_currentCategoryIndex], _plans[_currentPlanIndex]);
   }
 
-  Future<void> _onSwipe(DragEndDetails details) async {
-    if (_isAnimating) return;
-
-    int newIndex;
-    if (details.primaryVelocity! > 0) {
-      // Swiped right
-      newIndex =
-          (_currentCategoryIndex - 1 + _categories.length) % _categories.length;
-    } else {
-      // Swiped left
-      newIndex = (_currentCategoryIndex + 1) % _categories.length;
-    }
+  // New method to handle both swipe and tap animations
+  Future<void> _switchToCategory(int newIndex) async {
+    if (_isAnimating || newIndex == _currentCategoryIndex) return;
 
     // Haptic feedback
     await HapticFeedback.mediumImpact();
@@ -90,24 +81,49 @@ class _LeaderboardPageState extends State<LeaderboardPage>
     });
   }
 
+  Future<void> _onSwipe(DragEndDetails details) async {
+    if (_isAnimating) return;
+
+    int newIndex;
+    if (details.primaryVelocity! > 0) {
+      // Swiped right
+      newIndex =
+          (_currentCategoryIndex - 1 + _categories.length) % _categories.length;
+    } else {
+      // Swiped left
+      newIndex = (_currentCategoryIndex + 1) % _categories.length;
+    }
+
+    await _switchToCategory(newIndex);
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
+    final horizontalPadding = screenSize.width * 0.02; // 2% of screen width
+    final verticalSpacing = screenSize.height * 0.02; // 2% of screen height
 
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        centerTitle: true,
-        title: Image.asset(
-          'lib/images/aag_white.png',
-          height: screenSize.height * 0.04,
-        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
+        titleSpacing: horizontalPadding,
+        title: const Text(
+          'LEADERBOARD',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        leading: Padding(
+          padding: EdgeInsets.only(left: horizontalPadding),
+          child: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ),
       ),
       body: Stack(
         children: [
@@ -120,76 +136,61 @@ class _LeaderboardPageState extends State<LeaderboardPage>
           SafeArea(
             child: Column(
               children: [
-                // Title Row with Icon
-                Padding(
-                  padding: EdgeInsets.all(screenSize.height * 0.02),
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        'lib/images/ic4.png',
-                        width: screenSize.width * 0.06,
-                        height: screenSize.width * 0.06,
-                      ),
-                      const SizedBox(width: 10),
-                      const Text(
-                        'LEADERBOARD',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                // Dynamic Spacing
-                SizedBox(height: screenSize.height * 0.03),
-
-                // Categories Row with GestureDetector for swipe
+                SizedBox(height: verticalSpacing),
+                // Category Tabs
                 GestureDetector(
                   onHorizontalDragEnd: _onSwipe,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: horizontalPadding),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         for (int i = 0; i < _categories.length; i++)
-                          _leaderboardTab(
-                              _categories[i], _currentCategoryIndex == i),
+                          GestureDetector(
+                            onTap: () async {
+                              if (!_isAnimating) {
+                                await HapticFeedback.selectionClick();
+                                await _switchToCategory(i);
+                              }
+                            },
+                            child: _leaderboardTab(
+                                _categories[i], _currentCategoryIndex == i),
+                          ),
                       ],
                     ),
                   ),
                 ),
-
-                // Dynamic Spacing
-                SizedBox(height: screenSize.height * 0.03),
-
-                // Plans Row
+                SizedBox(
+                    height: verticalSpacing * 0.5), // Half standard spacing
+                // Plan Tabs
                 Padding(
-                  padding: const EdgeInsets.all(10),
+                  padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       for (int i = 0; i < _plans.length; i++)
                         _planTab(_plans[i], _currentPlanIndex == i),
                     ],
                   ),
                 ),
-
-                // Dynamic Spacing
-                SizedBox(height: screenSize.height * 0.02),
-
+                Container(
+                  height: 1,
+                  color: Colors.white,
+                ),
+                SizedBox(height: verticalSpacing),
                 // Leaderboard Content
                 Expanded(
                   child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: horizontalPadding),
                     decoration: BoxDecoration(
                       color:
                           const Color.fromARGB(120, 0, 0, 0).withOpacity(0.2),
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 500),
+                      duration: const Duration(
+                          milliseconds: 400), // Match design system
                       transitionBuilder:
                           (Widget child, Animation<double> animation) {
                         return FadeTransition(
@@ -207,10 +208,108 @@ class _LeaderboardPageState extends State<LeaderboardPage>
                     ),
                   ),
                 ),
+                SizedBox(height: verticalSpacing), // Bottom padding
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildLeaderboardItem(
+      int rank, String name, String value, bool isTopThree) {
+    final standardPadding = 8.0; // Standard padding for interactive elements
+
+    return Container(
+      margin: EdgeInsets.symmetric(
+        vertical: standardPadding * 0.625, // 5px converted to match system
+        horizontal: standardPadding * 1.25, // 10px converted to match system
+      ),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: isTopThree
+              ? _getMedalGradient(rank)
+              : name == 'You'
+                  ? [
+                      const Color.fromARGB(255, 237, 55, 173),
+                      const Color.fromARGB(255, 245, 153, 33)
+                    ]
+                  : [
+                      const Color.fromRGBO(101, 47, 157, 1),
+                      const Color.fromRGBO(57, 47, 146, 1)
+                    ],
+        ),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(standardPadding * 1.25), // 10px converted
+        child: Row(
+          children: [
+            if (isTopThree) _buildMedal(rank),
+            if (!isTopThree) ...[
+              const SizedBox(width: 2),
+              Image.asset(
+                'lib/images/rank.png',
+                height: 40,
+                width: 40,
+              ),
+            ],
+            const SizedBox(width: 10),
+            Text(
+              "#$rank",
+              style: const TextStyle(
+                color: Colors.white70,
+                fontSize: 14,
+              ),
+            ),
+            const SizedBox(width: 10),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(25),
+              child: Image.asset(
+                'lib/images/ch.png',
+                height: 50,
+                width: 50,
+              ),
+            ),
+            const SizedBox(width: 15),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  _getCategoryLabel(),
+                  style: const TextStyle(
+                    color: Colors.white70,
+                    fontSize: 12,
+                  ),
+                ),
+                Text(
+                  value,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -233,22 +332,23 @@ class _LeaderboardPageState extends State<LeaderboardPage>
   }
 
   Widget _leaderboardTab(String text, bool isActive) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeInOut,
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       decoration: BoxDecoration(
-        color: isActive ? Colors.orange : Colors.transparent,
-        borderRadius: BorderRadius.circular(15),
+        border: Border(
+          bottom: BorderSide(
+            color: isActive ? Colors.orange : Colors.transparent,
+            width: 2,
+          ),
+        ),
       ),
-      child: AnimatedDefaultTextStyle(
-        duration: const Duration(milliseconds: 500),
+      child: Text(
+        text,
         style: TextStyle(
-          color: isActive ? Colors.white : Colors.white.withOpacity(0.7),
+          color: isActive ? Colors.orange : Colors.white,
           fontSize: 16,
           fontWeight: FontWeight.bold,
         ),
-        child: Text(text),
       ),
     );
   }
@@ -277,102 +377,9 @@ class _LeaderboardPageState extends State<LeaderboardPage>
           text,
           style: TextStyle(
             color: isActive ? Colors.orange : Colors.white,
-            fontSize: 18,
+            fontSize: 15,
             fontWeight: FontWeight.bold,
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildLeaderboardItem(
-      int rank, String name, String value, bool isTopThree) {
-    List<List<Color>> gradients = [
-      [
-        const Color.fromARGB(255, 245, 187, 41),
-        const Color.fromARGB(255, 109, 101, 27)
-      ], // Gold
-      [Colors.grey[900]!, Colors.grey[600]!], // Silver
-      [Colors.brown[800]!, Colors.brown[300]!], // Bronze
-    ];
-
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: isTopThree
-              ? gradients[rank - 1]
-              : name == 'You'
-                  ? [
-                      const Color.fromARGB(255, 237, 55, 173),
-                      const Color.fromARGB(255, 245, 153, 33)
-                    ]
-                  : [
-                      const Color.fromRGBO(101, 47, 157, 1),
-                      const Color.fromRGBO(57, 47, 146, 1)
-                    ],
-        ),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-        child: Row(
-          children: [
-            if (isTopThree) _buildMedal(rank),
-            if (!isTopThree) ...[
-              const SizedBox(width: 2),
-              Image.asset(
-                'lib/images/rank.png',
-                height: 40,
-                width: 40,
-              ),
-            ],
-            const SizedBox(width: 10),
-            Text(
-              "#$rank",
-              style: const TextStyle(color: Colors.white70, fontSize: 14),
-            ),
-            const SizedBox(width: 10),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(25),
-              child: Image.asset(
-                'lib/images/ch.png',
-                height: 50,
-                width: 50,
-              ),
-            ),
-            const SizedBox(width: 15),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    name,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  _getCategoryLabel(),
-                  style: const TextStyle(color: Colors.white70, fontSize: 12),
-                ),
-                Text(
-                  value,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ],
         ),
       ),
     );
@@ -408,5 +415,17 @@ class _LeaderboardPageState extends State<LeaderboardPage>
       default:
         return '';
     }
+  }
+
+  List<Color> _getMedalGradient(int rank) {
+    final gradients = [
+      [
+        const Color.fromARGB(255, 245, 187, 41),
+        const Color.fromARGB(255, 109, 101, 27)
+      ],
+      [Colors.grey[900]!, Colors.grey[600]!],
+      [Colors.brown[800]!, Colors.brown[300]!],
+    ];
+    return gradients[rank - 1];
   }
 }

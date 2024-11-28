@@ -35,7 +35,7 @@ class _AnimatedTeamScoreState extends State<AnimatedTeamScore>
 
     _heightAnimation = Tween<double>(
       begin: 0,
-      end: widget.score / 20,
+      end: widget.score / 15,
     ).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.easeInOut,
@@ -59,8 +59,8 @@ class _AnimatedTeamScoreState extends State<AnimatedTeamScore>
     super.didUpdateWidget(oldWidget);
     if (oldWidget.score != widget.score) {
       _heightAnimation = Tween<double>(
-        begin: oldWidget.score / 20,
-        end: widget.score / 20,
+        begin: oldWidget.score / 15,
+        end: widget.score / 15,
       ).animate(CurvedAnimation(
         parent: _controller,
         curve: Curves.easeInOut,

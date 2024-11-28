@@ -7,7 +7,6 @@ import 'otp_verification.dart';
 
 class SignUpPage extends StatefulWidget {
   final String selectedPlan;
-
   const SignUpPage({super.key, required this.selectedPlan});
 
   @override
@@ -15,9 +14,18 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  // Map of country codes to their flag emojis
+  final Map<String, Map<String, String>> countries = {
+    'IN': {'flag': '🇮🇳', 'code': '+91'},
+    'US': {'flag': '🇺🇸', 'code': '+1'},
+    'UK': {'flag': '🇬🇧', 'code': '+44'},
+    'AE': {'flag': '🇦🇪', 'code': '+971'},
+  };
+
   final TextEditingController _phoneController = TextEditingController();
   final FocusNode _phoneFocusNode = FocusNode();
   double _initialChildSize = 0.5;
+  String selectedCountry = 'IN'; // Default to India
 
   @override
   void initState() {
@@ -37,6 +45,43 @@ class _SignUpPageState extends State<SignUpPage> {
     setState(() {
       _initialChildSize = _phoneFocusNode.hasFocus ? 0.8 : 0.5;
     });
+  }
+
+  void _showCountryPicker(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          color: const Color.fromRGBO(22, 13, 37, 1),
+          child: ListView.builder(
+            itemCount: countries.length,
+            itemBuilder: (context, index) {
+              String countryKey = countries.keys.elementAt(index);
+              return ListTile(
+                leading: Text(
+                  countries[countryKey]!['flag']!,
+                  style: const TextStyle(fontSize: 24),
+                ),
+                title: Text(
+                  countryKey,
+                  style: const TextStyle(color: Colors.white),
+                ),
+                trailing: Text(
+                  countries[countryKey]!['code']!,
+                  style: const TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  setState(() {
+                    selectedCountry = countryKey;
+                  });
+                  Navigator.pop(context);
+                },
+              );
+            },
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -127,12 +172,27 @@ class _SignUpPageState extends State<SignUpPage> {
                               margin: const EdgeInsets.only(bottom: 2),
                               child: Row(
                                 children: [
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15),
-                                    child: const Text(
-                                      '+91 |',
-                                      style: TextStyle(color: Colors.white),
+                                  InkWell(
+                                    onTap: () => _showCountryPicker(context),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            countries[selectedCountry]![
+                                                'flag']!,
+                                            style:
+                                                const TextStyle(fontSize: 20),
+                                          ),
+                                          const SizedBox(width: 4),
+                                          Text(
+                                            '${countries[selectedCountry]!['code']} |',
+                                            style: const TextStyle(
+                                                color: Colors.white),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   Expanded(
@@ -141,6 +201,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                       focusNode: _phoneFocusNode,
                                       style:
                                           const TextStyle(color: Colors.white),
+                                      keyboardType: TextInputType.phone,
                                       decoration: const InputDecoration(
                                         hintText: 'Enter phone number',
                                         hintStyle:
@@ -158,12 +219,16 @@ class _SignUpPageState extends State<SignUpPage> {
                         Center(
                           child: CustomButton(
                             onTap: () {
+                              // Concatenate selected country code with phone number
+                              String fullPhoneNumber =
+                                  '${countries[selectedCountry]!['code']}${_phoneController.text}';
+
                               Navigator.of(context).pushReplacement(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
                                       OTPVerificationPage(
-                                    phoneNumber: _phoneController.text,
+                                    phoneNumber: fullPhoneNumber,
                                     selectedPlan: widget.selectedPlan,
                                   ),
                                   transitionsBuilder: (context, animation,

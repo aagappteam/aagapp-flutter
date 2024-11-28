@@ -67,9 +67,11 @@ class _SplashscreenState extends State<Splashscreen>
     Timer(const Duration(seconds: 1), () {
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) => LoginVendor(
-            selectedPlan: '',
-          ),
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              LoginScreen(),
+          // LoginVendor(
+          //   selectedPlan: '',
+          // ),
           // LoginScreen()
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             var begin = const Offset(1.0, 0.0);
